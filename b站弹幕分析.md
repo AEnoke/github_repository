@@ -1,0 +1,16860 @@
+# 数据处理
+
+
+```python
+import pandas as pd
+```
+
+
+```python
+user_level = pd.read_excel('user_level.xlsx')
+```
+
+
+```python
+import os
+```
+
+
+```python
+os.listdir('./')
+```
+
+
+
+
+    ['.ipynb_checkpoints',
+     '1、系统认识数据分析.xlsx',
+     '2、EXCEL基础操作.xlsx',
+     '3、Tableau数据可视化.xlsx',
+     '4、SQL从入门到实战.xlsx',
+     '5、Python.xlsx',
+     'b站弹幕分析.ipynb',
+     'demo.docx',
+     'speech_text.xlsx',
+     'Untitled-checkpoint.ipynb',
+     'user_level.xlsx',
+     'video_list.xlsx',
+     '【戴师兄】python办公自动化の课程稿子-checkpoint.ipynb',
+     '【戴师兄】python办公自动化の课程稿子.ipynb',
+     '办公自动化.ipynb']
+
+
+
+
+```python
+excel_list = []
+for item in os.listdir('./'):
+    if 'xlsx' in item and 'user_level'not in item and 'speech_text'not in item and 'video' not in item:
+        excel_list.append(item)
+excel_list
+```
+
+
+
+
+    ['1、系统认识数据分析.xlsx',
+     '2、EXCEL基础操作.xlsx',
+     '3、Tableau数据可视化.xlsx',
+     '4、SQL从入门到实战.xlsx',
+     '5、Python.xlsx']
+
+
+
+
+```python
+danmu = pd.DataFrame()
+for item in excel_list:
+    excel = pd.read_excel(item,converters={'uid':str,'id':str})
+    excel['视频标题']  = item
+    danmu = pd.concat([danmu,excel],axis=0)
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 6 columns</p>
+</div>
+
+
+
+# 时间处理
+
+## 时间处理
+
+
+```python
+from datetime import datetime
+```
+
+
+```python
+danmu['弹幕创建时间'] = danmu['ctime'].map(datetime.fromtimestamp)
+```
+
+
+```python
+danmu['年'] = danmu['弹幕创建时间'].map(lambda x:x.year)
+```
+
+
+```python
+danmu['月'] = danmu['弹幕创建时间'].map(lambda x:x.month)
+```
+
+
+```python
+danmu['星期'] = danmu['弹幕创建时间'].map(datetime.isoweekday)
+```
+
+
+```python
+danmu['小时'] = danmu['弹幕创建时间'].map(lambda x:x.hour)
+```
+
+
+```python
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 11 columns</p>
+</div>
+
+
+
+## 时间分析
+
+
+```python
+import matplotlib.pyplot as plt
+plt.rcParams['font.sans-serif'] = ['SimHei']
+```
+
+### 月份
+
+
+```python
+danmu_year = danmu[danmu['年']==2022]
+```
+
+
+```python
+danmu_year
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>119</th>
+      <td>955256697446334464</td>
+      <td>193596</td>
+      <td>26个人</td>
+      <td>1640966672</td>
+      <td>8925482694608335642</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-01 00:04:32</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>955258091952824320</td>
+      <td>333566</td>
+      <td>新年快乐</td>
+      <td>1640966838</td>
+      <td>8925482694608335642</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-01 00:07:18</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>957326648055242752</td>
+      <td>318384</td>
+      <td>语速正好</td>
+      <td>1641213429</td>
+      <td>3105945468129837519</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-03 20:37:09</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>1</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>958483048722579456</td>
+      <td>322386</td>
+      <td>课件PDF在哪</td>
+      <td>1641351283</td>
+      <td>-349731603797322061</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-05 10:54:43</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>3</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>958581356437020672</td>
+      <td>315713</td>
+      <td>楞</td>
+      <td>1641363002</td>
+      <td>-6327355589687884151</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-05 14:10:02</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>3</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+  </tbody>
+</table>
+<p>21903 rows × 11 columns</p>
+</div>
+
+
+
+
+```python
+danmu_year.groupby('月')[['id']].count().plot() #['id']一个中括号是series格式，[['id']]两个中括号是DF格式
+```
+
+
+
+
+    <Axes: xlabel='月'>
+
+
+
+
+    
+![png](output_21_1.png)
+    
+
+
+22年，3月份弹幕非常活跃
+
+
+```python
+danmu_year.groupby('月')[['uid']].nunique().plot() #nunique,出现重复值时只会计算一次
+```
+
+
+
+
+    <Axes: xlabel='月'>
+
+
+
+
+    
+![png](output_23_1.png)
+    
+
+
+22年，3月份发弹幕的人最多
+
+### 星期
+
+
+```python
+danmu_year.groupby('星期')[['id']].count().plot() 
+```
+
+
+
+
+    <Axes: xlabel='星期'>
+
+
+
+
+    
+![png](output_26_1.png)
+    
+
+
+
+```python
+danmu_year.groupby('星期')[['uid']].nunique().plot() 
+```
+
+
+
+
+    <Axes: xlabel='星期'>
+
+
+
+
+    
+![png](output_27_1.png)
+    
+
+
+
+```python
+danmu_year.groupby('小时')[['uid']].nunique().plot() 
+```
+
+
+
+
+    <Axes: xlabel='小时'>
+
+
+
+
+    
+![png](output_28_1.png)
+    
+
+
+工作日1-4，周日时弹幕最活跃；周五周六活跃度下降
+
+
+```python
+import pygwalker as pyg
+pyg.walk(danmu_year)
+```
+
+
+    Box(children=(HTML(value='<div id="ifr-pyg-000619bc742654d0O3qnjmdWTEHIRpfr" style="height: auto">\n    <head>…
+
+
+
+
+
+
+
+
+
+    <pygwalker.api.pygwalker.PygWalker at 0x210c07d6450>
+
+
+
+根据小时弹幕数量趋势，在每天11点、16点及21点发送弹幕数量最多，可能有2-3种不同的人群观看视频
+
+# 用户画像
+
+
+```python
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 11 columns</p>
+</div>
+
+
+
+## 用户处理
+
+
+```python
+danmu['用户弹幕数'] = danmu.groupby('uid')['id'].transform('count')
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 12 columns</p>
+</div>
+
+
+
+
+```python
+user_level['uid'] = user_level['uid'].astype(str)
+```
+
+
+```python
+danmu_level = pd.merge(danmu,user_level,on = 'uid',how='inner')
+danmu_level
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>54982927380083200</td>
+      <td>4137203</td>
+      <td>2</td>
+      <td>1631962811</td>
+      <td>4658843910516903647</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-09-18 19:00:11</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783364377004544</td>
+      <td>9193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53783376819848704</td>
+      <td>23017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53850829626031616</td>
+      <td>1931</td>
+      <td>打卡</td>
+      <td>1629803506</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-24 19:11:46</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>2</td>
+      <td>19</td>
+      <td>79.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>27610</th>
+      <td>1192131213687832320</td>
+      <td>4408637</td>
+      <td>终于毕业辣！</td>
+      <td>1669204315</td>
+      <td>-2335781148162268958</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-11-23 19:51:55</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>3</td>
+      <td>19</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>27611</th>
+      <td>1193489428359011584</td>
+      <td>4393601</td>
+      <td>完结，感谢师兄！</td>
+      <td>1669366226</td>
+      <td>2218640609761978448</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-11-25 16:50:26</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>5</td>
+      <td>16</td>
+      <td>2.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>27612</th>
+      <td>1193489958695060736</td>
+      <td>4433441</td>
+      <td>废了废了</td>
+      <td>1669366290</td>
+      <td>2218640609761978448</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-11-25 16:51:30</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>5</td>
+      <td>16</td>
+      <td>2.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>27613</th>
+      <td>1214583153063240704</td>
+      <td>4407770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>27614</th>
+      <td>1214583220188773888</td>
+      <td>4414000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+<p>27615 rows × 13 columns</p>
+</div>
+
+
+
+## 弹幕内容
+
+
+```python
+danmu_level.groupby('uid')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>uid</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6653485828143602809</th>
+      <td>214</td>
+    </tr>
+    <tr>
+      <th>6812827409839048297</th>
+      <td>187</td>
+    </tr>
+    <tr>
+      <th>-3260951504495839240</th>
+      <td>176</td>
+    </tr>
+    <tr>
+      <th>7975574863793804658</th>
+      <td>130</td>
+    </tr>
+    <tr>
+      <th>-5461449000341941986</th>
+      <td>102</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>-8446399402889408388</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>-8445271993221121197</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>-8444651956084190909</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>-8444396110000680543</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>999036751640420934</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>8392 rows × 1 columns</p>
+</div>
+
+
+
+
+```python
+#pd.set_option('display.max_rows',300) #指定dataframe展示的最大行数
+danmu_level[danmu_level['uid']=='6653485828143602809']
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6874</th>
+      <td>1117359445828237312</td>
+      <td>239856</td>
+      <td>因为原来已经有了一个名称相同的表格了，只不过被师兄隐藏了</td>
+      <td>1660290825</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 15:53:45</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6875</th>
+      <td>1117365973087926528</td>
+      <td>577767</td>
+      <td>我有，需要付费</td>
+      <td>1660291603</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:06:43</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6876</th>
+      <td>1117367556588805888</td>
+      <td>702844</td>
+      <td>商品交易总额</td>
+      <td>1660291792</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:09:52</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6877</th>
+      <td>1117368003449593600</td>
+      <td>753890</td>
+      <td>平台抽成 总部抽成 工资。。。</td>
+      <td>1660291845</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:10:45</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6878</th>
+      <td>1117368718981354752</td>
+      <td>813715</td>
+      <td>黑心商家只做外卖</td>
+      <td>1660291931</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:12:11</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6879</th>
+      <td>1117368836069266176</td>
+      <td>827663</td>
+      <td>小作坊是这样的</td>
+      <td>1660291945</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:12:25</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6880</th>
+      <td>1117372758867599616</td>
+      <td>981734</td>
+      <td>前面的，没错的</td>
+      <td>1660292412</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-12 16:20:12</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6881</th>
+      <td>1118055524727096576</td>
+      <td>1685696</td>
+      <td>我数据透视表直接复制行吗</td>
+      <td>1660373804</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 14:56:44</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6882</th>
+      <td>1118063929684269568</td>
+      <td>1958460</td>
+      <td>wo shu ju tou shi biao bu pei yong  you xing ming</td>
+      <td>1660374806</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 15:13:26</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6883</th>
+      <td>1118066264124986368</td>
+      <td>2044789</td>
+      <td>基础可是不会能难死一方人</td>
+      <td>1660375085</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 15:18:05</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6884</th>
+      <td>1118071653553827840</td>
+      <td>2136613</td>
+      <td>我有个问题，在选择区域的时候不能拖动右边滚动条怎么回事</td>
+      <td>1660375727</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 15:28:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6885</th>
+      <td>1118081890130388480</td>
+      <td>2360594</td>
+      <td>0</td>
+      <td>1660376947</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 15:49:07</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6886</th>
+      <td>1118092893223972608</td>
+      <td>2721640</td>
+      <td>第二天才学到这</td>
+      <td>1660378259</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 16:10:59</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6887</th>
+      <td>1118102106021070848</td>
+      <td>2931640</td>
+      <td>已经过去8895天了，真快</td>
+      <td>1660379357</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 16:29:17</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6888</th>
+      <td>1118119903073668352</td>
+      <td>3114129</td>
+      <td>因为你这就是个字而已</td>
+      <td>1660381479</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:04:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6889</th>
+      <td>1118120202203243008</td>
+      <td>3149743</td>
+      <td>那就到右表中</td>
+      <td>1660381514</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:05:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6890</th>
+      <td>1118128927454394624</td>
+      <td>3249857</td>
+      <td>兄弟们，多思考呀</td>
+      <td>1660382555</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:22:35</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6891</th>
+      <td>1118133009250303744</td>
+      <td>3372101</td>
+      <td>舒服了</td>
+      <td>1660383041</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:30:41</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6892</th>
+      <td>1118133387845043968</td>
+      <td>3417233</td>
+      <td>考公党在哪、</td>
+      <td>1660383086</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:31:26</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6893</th>
+      <td>1118133708843584512</td>
+      <td>3455505</td>
+      <td>卷歪了</td>
+      <td>1660383125</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:32:05</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6894</th>
+      <td>1118135866620114176</td>
+      <td>3441482</td>
+      <td>-1是什么</td>
+      <td>1660383382</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:36:22</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6895</th>
+      <td>1118136804189635072</td>
+      <td>3513991</td>
+      <td>2020年8月</td>
+      <td>1660383494</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:38:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6896</th>
+      <td>1118138684873760000</td>
+      <td>3671022</td>
+      <td>前面的，因为你算出来是1</td>
+      <td>1660383718</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-13 17:41:58</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6897</th>
+      <td>1118673107788604160</td>
+      <td>4177608</td>
+      <td>1900 1 0</td>
+      <td>1660447426</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 11:23:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6898</th>
+      <td>1118685882883369472</td>
+      <td>4593690</td>
+      <td>等差数列</td>
+      <td>1660448949</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 11:49:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6899</th>
+      <td>1118712138060489984</td>
+      <td>4906525</td>
+      <td>哈哈</td>
+      <td>1660452079</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 12:41:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6900</th>
+      <td>1118723084707303936</td>
+      <td>4984053</td>
+      <td>你为此函数输入的参数过多怎么回事</td>
+      <td>1660453384</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 13:03:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6901</th>
+      <td>1118723945395300352</td>
+      <td>4996057</td>
+      <td>终于对了，不是括号太多就是太少</td>
+      <td>1660453486</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 13:04:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6902</th>
+      <td>1118731659206885888</td>
+      <td>5111805</td>
+      <td>换吧，半瓢水不满一瓢水还散，哪个也不行，这才是Excel啊兄弟们</td>
+      <td>1660454406</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 13:20:06</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6903</th>
+      <td>1118734487149169408</td>
+      <td>5194939</td>
+      <td>听课千遍不如手敲一遍</td>
+      <td>1660454743</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 13:25:43</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6904</th>
+      <td>1118826731705371392</td>
+      <td>5571263</td>
+      <td>复杂的是简单，简单了之后就是复杂，深刻理解我这句话</td>
+      <td>1660465739</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 16:28:59</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6905</th>
+      <td>1118839703320249344</td>
+      <td>5619265</td>
+      <td>别一不怎么就不会好吗，认真理解流程图</td>
+      <td>1660467286</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 16:54:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6906</th>
+      <td>1118847562028461056</td>
+      <td>5718381</td>
+      <td>同感</td>
+      <td>1660468222</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 17:10:22</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6907</th>
+      <td>1118848104888902400</td>
+      <td>5753634</td>
+      <td>好</td>
+      <td>1660468287</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 17:11:27</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6908</th>
+      <td>1118855880297752832</td>
+      <td>5991719</td>
+      <td>显示出来了，必须升序</td>
+      <td>1660469214</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 17:26:54</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6909</th>
+      <td>1118861838575146240</td>
+      <td>6052966</td>
+      <td>我为什么没报错，Excel</td>
+      <td>1660469924</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 17:38:44</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6910</th>
+      <td>1118858726770838272</td>
+      <td>6188915</td>
+      <td>i99</td>
+      <td>1660469553</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-14 17:32:33</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6911</th>
+      <td>1119528148132817408</td>
+      <td>6586648</td>
+      <td>直接自动化了这是</td>
+      <td>1660549355</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 15:42:35</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6912</th>
+      <td>1119537267355127552</td>
+      <td>7069672</td>
+      <td>嵌套一下而已，然后快速填充</td>
+      <td>1660550442</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 16:00:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6913</th>
+      <td>1119539710528589056</td>
+      <td>7249489</td>
+      <td>我觉得没毛病，把之前的再听一遍</td>
+      <td>1660550733</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 16:05:33</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6914</th>
+      <td>1119579813695273472</td>
+      <td>7896103</td>
+      <td>原来如此，逻辑设置的严密点就不用自己敲了</td>
+      <td>1660555514</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 17:25:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6915</th>
+      <td>1119581094459671040</td>
+      <td>7936386</td>
+      <td>懂了，建议复习坐标轴</td>
+      <td>1660555666</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 17:27:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6916</th>
+      <td>1119581967260848896</td>
+      <td>7974778</td>
+      <td>说实话，我是很佩服一个视频一次看到这的</td>
+      <td>1660555770</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 17:29:30</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6917</th>
+      <td>1119582568287837696</td>
+      <td>8014396</td>
+      <td>没毛病</td>
+      <td>1660555842</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-15 17:30:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6918</th>
+      <td>1120855006296278528</td>
+      <td>8829273</td>
+      <td>然后index match</td>
+      <td>1660707528</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 11:38:48</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6919</th>
+      <td>1121553361183729152</td>
+      <td>9207540</td>
+      <td>我也2473.82</td>
+      <td>1660790779</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 10:46:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6920</th>
+      <td>1120977217166338560</td>
+      <td>9455111</td>
+      <td>比较幸运，一次就成了</td>
+      <td>1660722097</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 15:41:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6921</th>
+      <td>1120986911125825024</td>
+      <td>9499259</td>
+      <td>兄弟们，我犯了个错，我把match查找区域选中一整行，结果GMV商家实收没问题，后面数据都不...</td>
+      <td>1660723253</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 16:00:53</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6922</th>
+      <td>1121567384789152000</td>
+      <td>9494970</td>
+      <td>兄弟们，我知道为啥快速填充和师兄不一样了，快速填充小三角选仅填充格式</td>
+      <td>1660792451</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 11:14:11</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6923</th>
+      <td>1121032858291624704</td>
+      <td>9924805</td>
+      <td>大于等于，小于等于</td>
+      <td>1660728730</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 17:32:10</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6924</th>
+      <td>1121612984867689984</td>
+      <td>10000368</td>
+      <td>index可以实现自动化，是有用的</td>
+      <td>1660797887</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 12:44:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6925</th>
+      <td>1121613515531206656</td>
+      <td>10063618</td>
+      <td>省时省力呀家人们</td>
+      <td>1660797950</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 12:45:50</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6926</th>
+      <td>1121037814910485248</td>
+      <td>10176686</td>
+      <td>说白了换个函数，把数值区域提前，再加上俩时间条件</td>
+      <td>1660729321</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 17:42:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6927</th>
+      <td>1121038784977205248</td>
+      <td>10217888</td>
+      <td>刚才是全部情况，现在是美团饿了么情况</td>
+      <td>1660729437</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 17:43:57</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6928</th>
+      <td>1121614227807852544</td>
+      <td>10129613</td>
+      <td>对的，只要逻辑对就行，自己改也无妨</td>
+      <td>1660798035</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 12:47:15</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6929</th>
+      <td>1121616415003110400</td>
+      <td>10193025</td>
+      <td>怎么可能没用呢家人们，后面可是求美团饿了么，理解逻辑再干</td>
+      <td>1660798295</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 12:51:35</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6930</th>
+      <td>1121624564686676992</td>
+      <td>10221115</td>
+      <td>0+1</td>
+      <td>1660799267</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:07:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6931</th>
+      <td>1121624948566395392</td>
+      <td>10260865</td>
+      <td>出来个0</td>
+      <td>1660799313</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:08:33</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6932</th>
+      <td>1121627248798123264</td>
+      <td>10290478</td>
+      <td>0是因为单元格没选对，我也找了半天</td>
+      <td>1660799587</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:13:07</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6933</th>
+      <td>1121627549051549440</td>
+      <td>10302642</td>
+      <td>我一个课听一礼拜，你们真强</td>
+      <td>1660799623</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:13:43</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6934</th>
+      <td>1121627752475421952</td>
+      <td>10318739</td>
+      <td>确实</td>
+      <td>1660799647</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:14:07</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6935</th>
+      <td>1121633259940261632</td>
+      <td>10480330</td>
+      <td>看弹幕越来越少了</td>
+      <td>1660800304</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:25:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6936</th>
+      <td>1121635553478011904</td>
+      <td>10558603</td>
+      <td>画了一周</td>
+      <td>1660800577</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:29:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6937</th>
+      <td>1121637357381137920</td>
+      <td>10622172</td>
+      <td>名称改有效订单，日期-7</td>
+      <td>1660800792</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 13:33:12</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6938</th>
+      <td>1121663069487952896</td>
+      <td>10743408</td>
+      <td>弹幕少的可怜</td>
+      <td>1660803857</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 14:24:17</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6939</th>
+      <td>1121763906000432640</td>
+      <td>11230400</td>
+      <td>那肯定</td>
+      <td>1660815878</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 17:44:38</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6940</th>
+      <td>1121849866197302784</td>
+      <td>11496501</td>
+      <td>之所以用date函数，是因为想求本月初至今截止的GMV</td>
+      <td>1660826125</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 20:35:25</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6941</th>
+      <td>1121864233273819904</td>
+      <td>11687916</td>
+      <td>我这Excel没有上下箭头</td>
+      <td>1660827838</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 21:03:58</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6942</th>
+      <td>1121865656829065472</td>
+      <td>11729598</td>
+      <td>红升绿降不是吗</td>
+      <td>1660828007</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 21:06:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6943</th>
+      <td>1121878378773782272</td>
+      <td>12049491</td>
+      <td>没毛病</td>
+      <td>1660829524</td>
+      <td>6653485828143602809</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-18 21:32:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6944</th>
+      <td>1122260298590352896</td>
+      <td>306523</td>
+      <td>看不懂</td>
+      <td>1660875052</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 10:10:52</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6945</th>
+      <td>1122265904403808512</td>
+      <td>780181</td>
+      <td>破解游戏玩的一愣一愣的，不懂了</td>
+      <td>1660875721</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 10:22:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6946</th>
+      <td>1122318858095459840</td>
+      <td>1685045</td>
+      <td>搞就搞了，别说</td>
+      <td>1660882033</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 12:07:13</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6947</th>
+      <td>1122319370111181056</td>
+      <td>1744604</td>
+      <td>限速</td>
+      <td>1660882094</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 12:08:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6948</th>
+      <td>1122326496879335680</td>
+      <td>2216160</td>
+      <td>破解版不需要登陆</td>
+      <td>1660882944</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 12:22:24</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6949</th>
+      <td>1122477538539835392</td>
+      <td>2410186</td>
+      <td>19年没线</td>
+      <td>1660900949</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 17:22:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6950</th>
+      <td>1122579579010119936</td>
+      <td>2357930</td>
+      <td>表示从19到20再到21版终于换到师兄这版了</td>
+      <td>1660913114</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:45:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6951</th>
+      <td>1122581554309318912</td>
+      <td>2431789</td>
+      <td>真的建议下载师兄这版，就是21版，否则旧版本后期有的字段都无法显示</td>
+      <td>1660913349</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:49:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6952</th>
+      <td>1122582086725826304</td>
+      <td>2449011</td>
+      <td>幕布可以导入师兄的笔记，一般打开方式进不去，兄弟们要思考啊</td>
+      <td>1660913413</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:50:13</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6953</th>
+      <td>1122582293731351552</td>
+      <td>2458596</td>
+      <td>幕布不用下载在线登陆也能导入</td>
+      <td>1660913437</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:50:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6954</th>
+      <td>1122583476248494080</td>
+      <td>2499988</td>
+      <td>也就是tableau内置数据库直接连接上方便提取</td>
+      <td>1660913578</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:52:58</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6955</th>
+      <td>1122583791156716032</td>
+      <td>2504401</td>
+      <td>听不懂是因为安装时没有注意，你是已经安装数据库的</td>
+      <td>1660913616</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 20:53:36</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6956</th>
+      <td>1122587307074013952</td>
+      <td>2638363</td>
+      <td>版本不一样重下吧</td>
+      <td>1660914035</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:00:35</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6957</th>
+      <td>1122587713149913344</td>
+      <td>2658339</td>
+      <td>Excel能听懂这应该没问题</td>
+      <td>1660914083</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:01:23</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6958</th>
+      <td>1122603008484677376</td>
+      <td>3307996</td>
+      <td>懂了，代码开始了，一切都可以代码</td>
+      <td>1660915907</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:31:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6959</th>
+      <td>1122604002173991680</td>
+      <td>3323650</td>
+      <td>可以听懂</td>
+      <td>1660916025</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:33:45</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6960</th>
+      <td>1122604997163675648</td>
+      <td>3381024</td>
+      <td>意思就是一个固定的，一个不固定</td>
+      <td>1660916144</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:35:44</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6961</th>
+      <td>1122606978846341376</td>
+      <td>3494399</td>
+      <td>人还是狗</td>
+      <td>1660916380</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:39:40</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6962</th>
+      <td>1122607185197583616</td>
+      <td>3518952</td>
+      <td>幕布导入前面的</td>
+      <td>1660916404</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-19 21:40:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6963</th>
+      <td>1122953603133513728</td>
+      <td>3769611</td>
+      <td>在线就能看在线就能导</td>
+      <td>1660957701</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 09:08:21</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>9</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6964</th>
+      <td>1122959589638500352</td>
+      <td>4064066</td>
+      <td>和Excel原理一样</td>
+      <td>1660958414</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 09:20:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>9</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6965</th>
+      <td>1122961385253434880</td>
+      <td>4131224</td>
+      <td>简介下载里面有工作簿</td>
+      <td>1660958628</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 09:23:48</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>9</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6966</th>
+      <td>1122973786921183488</td>
+      <td>4314529</td>
+      <td>破解版不能玩了吗</td>
+      <td>1660960107</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 09:48:27</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>9</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6967</th>
+      <td>1123325834669828608</td>
+      <td>4143130</td>
+      <td>因为这些图表是师兄做过的非空白</td>
+      <td>1661002074</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 21:27:54</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6968</th>
+      <td>1123327873940377088</td>
+      <td>4218710</td>
+      <td>建议直接用tableau public不要钱</td>
+      <td>1661002317</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 21:31:57</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6969</th>
+      <td>1123335367257359104</td>
+      <td>4358133</td>
+      <td>不同还有可能是数据取得范围不一样，有的取得多有的少</td>
+      <td>1661003211</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 21:46:51</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6970</th>
+      <td>1123335511860438016</td>
+      <td>4363510</td>
+      <td>但只要趋势对那就没错</td>
+      <td>1661003228</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 21:47:08</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6971</th>
+      <td>1123340687254023168</td>
+      <td>4593556</td>
+      <td>我是知道为啥弹幕那么少了，软件花钱，戴师兄用户群体大多想白嫖，所以放弃了</td>
+      <td>1661003845</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 21:57:25</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6972</th>
+      <td>1123342737136139776</td>
+      <td>4875803</td>
+      <td>懂了数据透视表</td>
+      <td>1661004089</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 22:01:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>22</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6973</th>
+      <td>1123349667829264640</td>
+      <td>5027764</td>
+      <td>同听不懂，看看笔记复习下知识点去了</td>
+      <td>1661004915</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-20 22:15:15</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>22</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6974</th>
+      <td>1123712115622946816</td>
+      <td>5145521</td>
+      <td>行列结合Excel理解</td>
+      <td>1661048122</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 10:15:22</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6975</th>
+      <td>1123723160768845056</td>
+      <td>5335464</td>
+      <td>GMV拖到ABC上</td>
+      <td>1661049439</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 10:37:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6976</th>
+      <td>1123766478022251520</td>
+      <td>5758144</td>
+      <td>兄弟们，public没预测</td>
+      <td>1661054603</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 12:03:23</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6977</th>
+      <td>1123922476720667136</td>
+      <td>6985159</td>
+      <td>兄弟们 直接tableau public可以下载了，完全免费</td>
+      <td>1661073199</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 17:13:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6978</th>
+      <td>1123971125169406720</td>
+      <td>7487866</td>
+      <td>别2019了，直接tableau public它不香吗</td>
+      <td>1661078999</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 18:49:59</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6979</th>
+      <td>1123975291136633088</td>
+      <td>7508362</td>
+      <td>这和Excel切片器有啥区别呢</td>
+      <td>1661079495</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 18:58:15</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6980</th>
+      <td>1123990563545324032</td>
+      <td>7677577</td>
+      <td>度量值改成百分比</td>
+      <td>1661081316</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-21 19:28:36</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6981</th>
+      <td>1124443558678578176</td>
+      <td>7932875</td>
+      <td>论学号英语的重要性</td>
+      <td>1661135317</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 10:28:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6982</th>
+      <td>1124445603493888256</td>
+      <td>7931922</td>
+      <td>首先要理解这是个嵌套函数</td>
+      <td>1661135561</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 10:32:41</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6983</th>
+      <td>1124445893051831552</td>
+      <td>7931922</td>
+      <td>然后理解0就是新客，否则为老客</td>
+      <td>1661135596</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 10:33:16</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6984</th>
+      <td>1124454168464207872</td>
+      <td>8070234</td>
+      <td>必须是最下面那个，上面那个挖了白挖</td>
+      <td>1661136582</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 10:49:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6985</th>
+      <td>1124506716441410816</td>
+      <td>8640480</td>
+      <td>两块商业区</td>
+      <td>1661142846</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 12:34:06</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6986</th>
+      <td>1124507103676193024</td>
+      <td>8644279</td>
+      <td>这是配送距离而不是店说明店在附近，没毛病</td>
+      <td>1661142892</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 12:34:52</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6987</th>
+      <td>1124624792969071872</td>
+      <td>8785271</td>
+      <td>这么多程序</td>
+      <td>1661156922</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 16:28:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6988</th>
+      <td>1124650262594640896</td>
+      <td>9301574</td>
+      <td>我的也灰了</td>
+      <td>1661159958</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 17:19:18</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6989</th>
+      <td>1124656298215040000</td>
+      <td>9467460</td>
+      <td>兄弟们，点下筛选器白的就没了</td>
+      <td>1661160678</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 17:31:18</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6990</th>
+      <td>1124665558172790016</td>
+      <td>9629182</td>
+      <td>告诉你们个不卡的方法，直接换固态，并且把软件按到固态那个盘</td>
+      <td>1661161782</td>
+      <td>6653485828143602809</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-22 17:49:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6991</th>
+      <td>1125174219194539776</td>
+      <td>20872</td>
+      <td>SQL是全视之眼？</td>
+      <td>1661222419</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-23 10:40:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6992</th>
+      <td>1125182922475954176</td>
+      <td>216545</td>
+      <td>安装我觉得恰恰是最有意思的，就和下载新游戏一样，焦急的等待</td>
+      <td>1661223456</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-23 10:57:36</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6993</th>
+      <td>1125191526478354944</td>
+      <td>659704</td>
+      <td>4小时？不翻个几倍对不起SQL</td>
+      <td>1661224482</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-23 11:14:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6994</th>
+      <td>1125197354882849280</td>
+      <td>861362</td>
+      <td>第一遍搞不懂呀</td>
+      <td>1661225177</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-23 11:26:17</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6995</th>
+      <td>1125935923901715456</td>
+      <td>1507695</td>
+      <td>能不问的问题咱能不能自己敲一遍验证一下</td>
+      <td>1661313221</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 11:53:41</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6996</th>
+      <td>1125949716476316416</td>
+      <td>1759347</td>
+      <td>用啥幕布，自己记笔记不会吗？</td>
+      <td>1661314865</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 12:21:05</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6997</th>
+      <td>1125951574645044480</td>
+      <td>1862664</td>
+      <td>搞笑吧，Excel能听懂这听不懂？目前为止比函数难？</td>
+      <td>1661315087</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 12:24:47</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6998</th>
+      <td>1125967814964898560</td>
+      <td>2064379</td>
+      <td>状语从句</td>
+      <td>1661317023</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 12:57:03</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6999</th>
+      <td>1125970391769133568</td>
+      <td>2092146</td>
+      <td>兄弟们，人口变了，现在是2022年，正常</td>
+      <td>1661317330</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 13:02:10</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7000</th>
+      <td>1125970818212333568</td>
+      <td>2097381</td>
+      <td>印度少了不少人</td>
+      <td>1661317381</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 13:03:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7001</th>
+      <td>1125976169691380480</td>
+      <td>2171689</td>
+      <td>英语学得好真的好入门</td>
+      <td>1661318019</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-24 13:13:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7002</th>
+      <td>1126621672238162944</td>
+      <td>2487753</td>
+      <td>看什么笔记自己记</td>
+      <td>1661394969</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-25 10:36:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7003</th>
+      <td>1126953923601713408</td>
+      <td>3400069</td>
+      <td>贼长</td>
+      <td>1661434576</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-25 21:36:16</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7004</th>
+      <td>1127384867852829184</td>
+      <td>3848006</td>
+      <td>找什么幕布，自己做笔记</td>
+      <td>1661485949</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-26 11:52:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7005</th>
+      <td>1127390685276893184</td>
+      <td>3926977</td>
+      <td>if函数</td>
+      <td>1661486642</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-26 12:04:02</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7006</th>
+      <td>1127413224812117760</td>
+      <td>4177467</td>
+      <td>21</td>
+      <td>1661489329</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-26 12:48:49</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7007</th>
+      <td>1127614926517671936</td>
+      <td>4765117</td>
+      <td>先状语，再定语</td>
+      <td>1661513374</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-26 19:29:34</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7008</th>
+      <td>1127615475560609536</td>
+      <td>4792801</td>
+      <td>先分组，然后组内统计，懂了吗</td>
+      <td>1661513439</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-26 19:30:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7009</th>
+      <td>1128134935891428608</td>
+      <td>5142311</td>
+      <td>无中生有</td>
+      <td>1661575364</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 12:42:44</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7010</th>
+      <td>1128140401086070016</td>
+      <td>5352935</td>
+      <td>展现而已，其实已经定下了</td>
+      <td>1661576015</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 12:53:35</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7011</th>
+      <td>1128140709577296384</td>
+      <td>5382183</td>
+      <td>没毛病</td>
+      <td>1661576052</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 12:54:12</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7012</th>
+      <td>1128142284848840704</td>
+      <td>5463719</td>
+      <td>相当于马后炮</td>
+      <td>1661576240</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 12:57:20</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7013</th>
+      <td>1128197545961762560</td>
+      <td>5920359</td>
+      <td>出来13个国家</td>
+      <td>1661582827</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 14:47:07</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7014</th>
+      <td>1128198216639203840</td>
+      <td>5968402</td>
+      <td>我也出来了</td>
+      <td>1661582907</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 14:48:27</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7015</th>
+      <td>1128199116955107840</td>
+      <td>6040111</td>
+      <td>摸不模糊都行</td>
+      <td>1661583015</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 14:50:15</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7016</th>
+      <td>1128200460289796864</td>
+      <td>6097305</td>
+      <td>应该说，它的逻辑很像英译汉</td>
+      <td>1661583175</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 14:52:55</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7017</th>
+      <td>1128201411557934848</td>
+      <td>6102745</td>
+      <td>这题不用模糊查询也行</td>
+      <td>1661583288</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-27 14:54:48</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>14</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7018</th>
+      <td>1128832281914760192</td>
+      <td>6871613</td>
+      <td>必须用</td>
+      <td>1661658494</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 11:48:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7019</th>
+      <td>1128834059150353152</td>
+      <td>6944103</td>
+      <td>兄弟们，建议查查单词字面意思</td>
+      <td>1661658706</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 11:51:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7020</th>
+      <td>1128835423062554880</td>
+      <td>6973714</td>
+      <td>当1＜0返回t，否则返回f</td>
+      <td>1661658868</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 11:54:28</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7021</th>
+      <td>1128835699559148288</td>
+      <td>6980498</td>
+      <td>很难理解吗？</td>
+      <td>1661658901</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 11:55:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7022</th>
+      <td>1128836831090352896</td>
+      <td>7041255</td>
+      <td>建议查下单词意思</td>
+      <td>1661659036</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 11:57:16</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7023</th>
+      <td>1128838972785864960</td>
+      <td>7157906</td>
+      <td>还好吧，不会暂停吗？</td>
+      <td>1661659291</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 12:01:31</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7024</th>
+      <td>1128841450721659648</td>
+      <td>7278697</td>
+      <td>就不留做过的题，没意义</td>
+      <td>1661659587</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 12:06:27</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7025</th>
+      <td>1128869086747725056</td>
+      <td>7419218</td>
+      <td>为啥我的和师兄不一样</td>
+      <td>1661662881</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 13:01:21</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7026</th>
+      <td>1129100925559015936</td>
+      <td>7764626</td>
+      <td>貌似懂了，就是又借用了原表一下</td>
+      <td>1661690519</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 20:41:59</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7027</th>
+      <td>1129109140665505536</td>
+      <td>8132178</td>
+      <td>date函数</td>
+      <td>1661691498</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 20:58:18</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>20</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7028</th>
+      <td>1129116477811817216</td>
+      <td>8367933</td>
+      <td>貌似懂了</td>
+      <td>1661692373</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-28 21:12:53</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>7</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7029</th>
+      <td>1129677887926968576</td>
+      <td>8521810</td>
+      <td>同问rank为啥（）</td>
+      <td>1661759298</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 15:48:18</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>15</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7030</th>
+      <td>1129695139443380992</td>
+      <td>8604243</td>
+      <td>兄弟们，是可以，但没必要，和or后面加括号同理</td>
+      <td>1661761354</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 16:22:34</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7031</th>
+      <td>1129709830530178560</td>
+      <td>8720147</td>
+      <td>不可以，先运行的where，偏移在order前面</td>
+      <td>1661763106</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 16:51:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7032</th>
+      <td>1129712241197878784</td>
+      <td>8772286</td>
+      <td>0是精确匹配的意思吗</td>
+      <td>1661763393</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 16:56:33</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7033</th>
+      <td>1129712500758348032</td>
+      <td>8785705</td>
+      <td>不复制自己输</td>
+      <td>1661763424</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 16:57:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7034</th>
+      <td>1129712922898163712</td>
+      <td>8788222</td>
+      <td>group by没意义</td>
+      <td>1661763474</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 16:57:54</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7035</th>
+      <td>1129715292092742144</td>
+      <td>8894930</td>
+      <td>兄弟们tableau遗留问题来了</td>
+      <td>1661763757</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 17:02:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7036</th>
+      <td>1129728961924913408</td>
+      <td>9159250</td>
+      <td>没毛病，有时候自己想复杂了，其实就是字面意思</td>
+      <td>1661765386</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 17:29:46</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7037</th>
+      <td>1129729664999595264</td>
+      <td>9183143</td>
+      <td>join 加入，加入了就叫内连接，否则连不上称不上连接</td>
+      <td>1661765470</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 17:31:10</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7038</th>
+      <td>1129730135340366848</td>
+      <td>9196967</td>
+      <td>内连接空值没法连</td>
+      <td>1661765526</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 17:32:06</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7039</th>
+      <td>1129739145502051072</td>
+      <td>9757437</td>
+      <td>兄弟，两边都缺更简单，不管啥链接都不连</td>
+      <td>1661766600</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-29 17:50:00</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7040</th>
+      <td>1130467913111957760</td>
+      <td>9962538</td>
+      <td>记不住表是不是没救了</td>
+      <td>1661853476</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 17:57:56</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7041</th>
+      <td>1130477035219910656</td>
+      <td>10030307</td>
+      <td>做不出来</td>
+      <td>1661854564</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 18:16:04</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7042</th>
+      <td>1130479057788827392</td>
+      <td>10218045</td>
+      <td>想到见鬼了</td>
+      <td>1661854805</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 18:20:05</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7043</th>
+      <td>1130519909034546688</td>
+      <td>10258101</td>
+      <td>排列组合？</td>
+      <td>1661859675</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 19:41:15</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7044</th>
+      <td>1130582135292340992</td>
+      <td>10434531</td>
+      <td>子查询结果多于一行</td>
+      <td>1661867093</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 21:44:53</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7045</th>
+      <td>1130582604870041088</td>
+      <td>10472324</td>
+      <td>不能= =会报错</td>
+      <td>1661867149</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 21:45:49</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7046</th>
+      <td>1130583352429370368</td>
+      <td>10460559</td>
+      <td>where语句不能跟超过一行的子句，所以不能等于</td>
+      <td>1661867238</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 21:47:18</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7047</th>
+      <td>1130584391878365952</td>
+      <td>10478704</td>
+      <td>因为两个国家有可能不在一个大洲，所以要加in区别开，=只能跟 一个</td>
+      <td>1661867362</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-30 21:49:22</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7048</th>
+      <td>1131225748968012800</td>
+      <td>11198045</td>
+      <td>必须取反，否则会取到大于的数值</td>
+      <td>1661943817</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 19:03:37</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7049</th>
+      <td>1131233889684146176</td>
+      <td>11340848</td>
+      <td>非（有的是）=所有都没有</td>
+      <td>1661944788</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 19:19:48</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>19</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7050</th>
+      <td>1131301305512645376</td>
+      <td>11409372</td>
+      <td>兄弟们这题我也是用的rank</td>
+      <td>1661952824</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 21:33:44</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7051</th>
+      <td>1131302641792753408</td>
+      <td>11431373</td>
+      <td>确实高阶，妙啊</td>
+      <td>1661952984</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 21:36:24</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7052</th>
+      <td>1131303080701498624</td>
+      <td>11481960</td>
+      <td>那岂不是可以无限套娃了</td>
+      <td>1661953036</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 21:37:16</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>21</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7053</th>
+      <td>1131322149835928576</td>
+      <td>11564278</td>
+      <td>师兄，这题不是德国吗</td>
+      <td>1661955309</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-08-31 22:15:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>22</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7054</th>
+      <td>1131907066324210432</td>
+      <td>11930174</td>
+      <td>好家伙</td>
+      <td>1662025037</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-01 17:37:17</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7055</th>
+      <td>1132592847242194944</td>
+      <td>12396024</td>
+      <td>表示装了mysql没装云端</td>
+      <td>1662106788</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 16:19:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>16</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7056</th>
+      <td>1132613263226353664</td>
+      <td>12602189</td>
+      <td>自己搭建的数据库，没用云端的，确实很占内存，但是学到不少</td>
+      <td>1662109222</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:00:22</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7057</th>
+      <td>1132617836200716544</td>
+      <td>12702339</td>
+      <td>datagrip好方便啊，自动补全</td>
+      <td>1662109767</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:09:27</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7058</th>
+      <td>1132635303983481344</td>
+      <td>12878191</td>
+      <td>我的数据也是空白，只有表头</td>
+      <td>1662111849</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:44:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7059</th>
+      <td>1132648890282265088</td>
+      <td>12902570</td>
+      <td>为啥我的gmv都为0</td>
+      <td>1662113469</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 18:11:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7060</th>
+      <td>1133155799670035456</td>
+      <td>13007469</td>
+      <td>0行数据多半代码输错了，大小写啥的</td>
+      <td>1662173897</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 10:58:17</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7061</th>
+      <td>1133162613962941184</td>
+      <td>13109783</td>
+      <td>没买，自己搭建的数据库</td>
+      <td>1662174710</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 11:11:50</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7062</th>
+      <td>1133162890946236928</td>
+      <td>13122795</td>
+      <td>自己搭建数据库由于是固态硬盘甚至很快</td>
+      <td>1662174743</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 11:12:23</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7063</th>
+      <td>1133192254673159168</td>
+      <td>13705139</td>
+      <td>怎么能改不了呢？？</td>
+      <td>1662178243</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 12:10:43</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7064</th>
+      <td>1133192502623590912</td>
+      <td>13714926</td>
+      <td>输错了改呀</td>
+      <td>1662178273</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 12:11:13</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7065</th>
+      <td>1133199071943844096</td>
+      <td>13952053</td>
+      <td>免费版不能连接mysql就很伤</td>
+      <td>1662179056</td>
+      <td>6653485828143602809</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 12:24:16</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7066</th>
+      <td>1133367134114903808</td>
+      <td>50603</td>
+      <td>我也卡住了</td>
+      <td>1662199090</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-03 17:58:10</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7067</th>
+      <td>1133373551232145408</td>
+      <td>97292</td>
+      <td>兄弟出不来是因为没把默认浏览器设置为Chrome</td>
+      <td>1662199855</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-03 18:10:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7068</th>
+      <td>1133377969612618752</td>
+      <td>97527</td>
+      <td>在刚才师兄并在cmd没有输入最后一串代码，大家执行下最后一串代码就出来标签了</td>
+      <td>1662200382</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-03 18:19:42</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7069</th>
+      <td>1133383123732712704</td>
+      <td>259475</td>
+      <td>建议先了解notebook是个啥再看</td>
+      <td>1662200996</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-03 18:29:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7070</th>
+      <td>1133387254685791232</td>
+      <td>312885</td>
+      <td>打开了</td>
+      <td>1662201489</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-03 18:38:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>18</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7071</th>
+      <td>1133877202962920192</td>
+      <td>563375</td>
+      <td>其实我觉得师兄讲的挺好，只不过需要重复听</td>
+      <td>1662259895</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 10:51:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7072</th>
+      <td>1133880828267635968</td>
+      <td>608873</td>
+      <td>python的%s 是用作print的格式化输出：打印字符串</td>
+      <td>1662260327</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 10:58:47</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7073</th>
+      <td>1133881009025369856</td>
+      <td>608873</td>
+      <td>下划线输不输入，输出值都是int</td>
+      <td>1662260349</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 10:59:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>10</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7074</th>
+      <td>1133882295284137472</td>
+      <td>629486</td>
+      <td>第一个我看了半小时查了度娘搞懂了</td>
+      <td>1662260502</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 11:01:42</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7075</th>
+      <td>1133905127800047616</td>
+      <td>657137</td>
+      <td>兄弟，这听不懂建议放弃</td>
+      <td>1662263224</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 11:47:04</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7076</th>
+      <td>1133905485037347840</td>
+      <td>669121</td>
+      <td>这和Excel很像</td>
+      <td>1662263267</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 11:47:47</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7077</th>
+      <td>1133917638326640384</td>
+      <td>828782</td>
+      <td>没毛病</td>
+      <td>1662264716</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 12:11:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7078</th>
+      <td>1133920749258754560</td>
+      <td>831915</td>
+      <td>零基础懂了</td>
+      <td>1662265086</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 12:18:06</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7079</th>
+      <td>1133921536621778432</td>
+      <td>854401</td>
+      <td>师兄并不快，要知道本课的目的就是知道就行</td>
+      <td>1662265180</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 12:19:40</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7080</th>
+      <td>1133927203713768704</td>
+      <td>876705</td>
+      <td>五十节课woc，50节课太水了吧</td>
+      <td>1662265856</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 12:30:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7081</th>
+      <td>1133948571335312128</td>
+      <td>900901</td>
+      <td>这很难吗，零基础\ n换行，其他看了师兄其他课都能理解，度娘都能查到</td>
+      <td>1662268403</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 13:13:23</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7082</th>
+      <td>1133957397702874624</td>
+      <td>904910</td>
+      <td>兄弟们一个小知识，缩进按tab有惊喜</td>
+      <td>1662269455</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-04 13:30:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7083</th>
+      <td>1136827380321598208</td>
+      <td>1980147</td>
+      <td>兄弟们，这里其实专业词汇很多需要研究，千万别跳过去</td>
+      <td>1662611584</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-08 12:33:04</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7084</th>
+      <td>1140451824604825088</td>
+      <td>2521468</td>
+      <td>没毛病</td>
+      <td>1663043651</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-13 12:34:11</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7085</th>
+      <td>1140452006780466944</td>
+      <td>2529981</td>
+      <td>CSDN亮了</td>
+      <td>1663043673</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-13 12:34:33</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>12</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7086</th>
+      <td>1141868895536459520</td>
+      <td>2788743</td>
+      <td>出错有可能是代码文件和表格文件不在同一路径，都放桌面即可</td>
+      <td>1663212579</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 11:29:39</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>11</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7087</th>
+      <td>1145563109105371136</td>
+      <td>4056103</td>
+      <td>我觉得能把2 30小时讲的课浓缩到1小时，可见师兄功底</td>
+      <td>1663652964</td>
+      <td>6653485828143602809</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-20 13:49:24</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>13</td>
+      <td>214.0</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+发送弹幕数最多的人发了214条弹幕，根据弹幕内容，此用户发言积极，上课认真，有问必答
+
+
+```python
+#pd.set_option('display.max_rows',300) #指定dataframe展示的最大行数
+danmu_level[danmu_level['uid']=='6812827409839048297']
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1485</th>
+      <td>1094787603103876352</td>
+      <td>13828</td>
+      <td>老师好大家好</td>
+      <td>1657600052</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 12:27:32</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1486</th>
+      <td>1094916748710439168</td>
+      <td>718093</td>
+      <td>基准</td>
+      <td>1657615447</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 16:44:07</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1487</th>
+      <td>1094928454727720448</td>
+      <td>977070</td>
+      <td>好哲学</td>
+      <td>1657616843</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 17:07:23</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1488</th>
+      <td>1094932478877232896</td>
+      <td>1351164</td>
+      <td>好难</td>
+      <td>1657617322</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 17:15:22</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1489</th>
+      <td>1094934073325065984</td>
+      <td>1586710</td>
+      <td>直接目标</td>
+      <td>1657617512</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 17:18:32</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1490</th>
+      <td>1094935022923816448</td>
+      <td>1733095</td>
+      <td>我也想成为人才</td>
+      <td>1657617626</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 17:20:26</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1491</th>
+      <td>1094935196693747200</td>
+      <td>1758976</td>
+      <td>谢谢师兄</td>
+      <td>1657617646</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 17:20:46</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1492</th>
+      <td>1096344549216902656</td>
+      <td>501721</td>
+      <td>裸辞三个月了 虽然以前天天用excel用到烂 但还是认真听下当作复习以及查漏补缺</td>
+      <td>1657785654</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:00:54</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1493</th>
+      <td>1096345115917801984</td>
+      <td>551785</td>
+      <td>筛选快捷键：ctrl+shift+L</td>
+      <td>1657785722</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:02:02</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1494</th>
+      <td>1096345616029831680</td>
+      <td>608476</td>
+      <td>要清洗数据</td>
+      <td>1657785781</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:03:01</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1495</th>
+      <td>1096346921674689536</td>
+      <td>714397</td>
+      <td>soga</td>
+      <td>1657785937</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:05:37</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1496</th>
+      <td>1096347078575257344</td>
+      <td>737750</td>
+      <td>那GMV很虚伪呀</td>
+      <td>1657785956</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:05:56</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1497</th>
+      <td>1096349405138875904</td>
+      <td>982989</td>
+      <td>门店访问量小于进店人数是有问题吧？</td>
+      <td>1657786233</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-07-14 16:10:33</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1498</th>
+      <td>1120983785656027904</td>
+      <td>2904904</td>
+      <td>哈哈哈哈哈哈哈哈哈</td>
+      <td>1660722880</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-17 15:54:40</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1499</th>
+      <td>1129647726972134144</td>
+      <td>8383405</td>
+      <td>格式刷一下就好了</td>
+      <td>1661755702</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 14:48:22</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1500</th>
+      <td>1129673347207156480</td>
+      <td>9112463</td>
+      <td>soga</td>
+      <td>1661758757</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 15:39:17</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1501</th>
+      <td>1129675160547488000</td>
+      <td>9344862</td>
+      <td>是的</td>
+      <td>1661758973</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 15:42:53</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1502</th>
+      <td>1129677349445558272</td>
+      <td>9565196</td>
+      <td>直接拖格子</td>
+      <td>1661759234</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 15:47:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1503</th>
+      <td>1129702775157022208</td>
+      <td>9733217</td>
+      <td>这么多公式 excel会不会卡</td>
+      <td>1661762265</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 16:37:45</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1504</th>
+      <td>1129707946985543168</td>
+      <td>10061702</td>
+      <td>不是分析更重要吗</td>
+      <td>1661762881</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 16:48:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1505</th>
+      <td>1129751298271543552</td>
+      <td>11209242</td>
+      <td>师兄牛逼</td>
+      <td>1661768049</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 18:14:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1506</th>
+      <td>1129751414537778688</td>
+      <td>11225699</td>
+      <td>投币了</td>
+      <td>1661768063</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 18:14:23</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1507</th>
+      <td>1129762972068244480</td>
+      <td>11715077</td>
+      <td>好奇怪</td>
+      <td>1661769441</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 18:37:21</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1508</th>
+      <td>1129793284806523392</td>
+      <td>12045887</td>
+      <td>哈哈哈哈哈哈哈哈哈哈哈哈或</td>
+      <td>1661773054</td>
+      <td>6812827409839048297</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-08-29 19:37:34</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>1</td>
+      <td>19</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1509</th>
+      <td>1130193591176583424</td>
+      <td>311913</td>
+      <td>哈哈哈哈哈哈哈哈哈</td>
+      <td>1661820775</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 08:52:55</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>8</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1510</th>
+      <td>1130193795884006400</td>
+      <td>321565</td>
+      <td>好刺眼的配色</td>
+      <td>1661820799</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 08:53:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>8</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1511</th>
+      <td>1130195975831539456</td>
+      <td>436244</td>
+      <td>好棒啊</td>
+      <td>1661821059</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 08:57:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>8</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1512</th>
+      <td>1130279036900452096</td>
+      <td>1152997</td>
+      <td>互联网就是</td>
+      <td>1661830960</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 11:42:40</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>11</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1513</th>
+      <td>1130285669261047296</td>
+      <td>1562680</td>
+      <td>都学</td>
+      <td>1661831751</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 11:55:51</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>11</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1514</th>
+      <td>1130287415878202880</td>
+      <td>1623925</td>
+      <td>2022.8 我可以上tableau官网诶</td>
+      <td>1661831959</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 11:59:19</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>11</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1515</th>
+      <td>1130294388833217792</td>
+      <td>2488905</td>
+      <td>两个表都是用内连接吗？</td>
+      <td>1661832791</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 12:13:11</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1516</th>
+      <td>1130297563224989696</td>
+      <td>2641398</td>
+      <td>师兄的tableau是什么版本的</td>
+      <td>1661833169</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 12:19:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1517</th>
+      <td>1130314841660270592</td>
+      <td>3010367</td>
+      <td>我的版本怎么没法一张表一张表地看 只能看三表连接好的数据</td>
+      <td>1661835229</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 12:53:49</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1518</th>
+      <td>1130316927319987456</td>
+      <td>3103098</td>
+      <td>终于开始了！</td>
+      <td>1661835477</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 12:57:57</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1519</th>
+      <td>1130320955797694720</td>
+      <td>3221329</td>
+      <td>我也学过 但我不会整合成仪表盘</td>
+      <td>1661835958</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 13:05:58</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1520</th>
+      <td>1130321552907402240</td>
+      <td>3293177</td>
+      <td>一个是数量 一个是性质？</td>
+      <td>1661836029</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 13:07:09</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1521</th>
+      <td>1130394703456657664</td>
+      <td>3458500</td>
+      <td>哈哈哈哈哈我以为咋了</td>
+      <td>1661844749</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 15:32:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1522</th>
+      <td>1130394803935240192</td>
+      <td>3471903</td>
+      <td>动态视力</td>
+      <td>1661844761</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 15:32:41</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1523</th>
+      <td>1130408688037702400</td>
+      <td>3671544</td>
+      <td>今天不听完这节课不睡觉</td>
+      <td>1661846416</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:00:16</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1524</th>
+      <td>1130409315640041472</td>
+      <td>3728314</td>
+      <td>是滴</td>
+      <td>1661846491</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:01:31</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1525</th>
+      <td>1130413324832536320</td>
+      <td>3908534</td>
+      <td>yes</td>
+      <td>1661846969</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:09:29</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1526</th>
+      <td>1130414693190838784</td>
+      <td>4086776</td>
+      <td>哈哈哈好主意</td>
+      <td>1661847132</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:12:12</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1527</th>
+      <td>1130416970739524608</td>
+      <td>4132008</td>
+      <td>因为你没把字段拖过去</td>
+      <td>1661847403</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:16:43</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1528</th>
+      <td>1130417225476696832</td>
+      <td>4168628</td>
+      <td>来吧！</td>
+      <td>1661847434</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:17:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1529</th>
+      <td>1130418440893551104</td>
+      <td>4239920</td>
+      <td>可以做折线图</td>
+      <td>1661847579</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:19:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1530</th>
+      <td>1130422467408683008</td>
+      <td>4381845</td>
+      <td>好漂亮</td>
+      <td>1661848059</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:27:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1531</th>
+      <td>1130426493621883392</td>
+      <td>4625338</td>
+      <td>玫瑰图好酷 怎么做呢</td>
+      <td>1661848539</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:35:39</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1532</th>
+      <td>1130427767733715200</td>
+      <td>4809094</td>
+      <td>呜呜呜呜呜</td>
+      <td>1661848691</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 16:38:11</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1533</th>
+      <td>1130449090694669312</td>
+      <td>5393536</td>
+      <td>啃秋</td>
+      <td>1661851232</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 17:20:32</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1534</th>
+      <td>1130450333575815168</td>
+      <td>5422981</td>
+      <td>我这里叫总额百分比</td>
+      <td>1661851381</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 17:23:01</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1535</th>
+      <td>1130451230242742016</td>
+      <td>5460501</td>
+      <td>树地图</td>
+      <td>1661851488</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-08-30 17:24:48</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1536</th>
+      <td>1131861181527874048</td>
+      <td>5809884</td>
+      <td>为什么我的预测线不管怎么拖都是直线。。</td>
+      <td>1662019567</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:06:07</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1537</th>
+      <td>1131862032770006272</td>
+      <td>5857753</td>
+      <td>哈哈哈哈哈可以装X了</td>
+      <td>1662019668</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:07:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1538</th>
+      <td>1131864106291192320</td>
+      <td>5990022</td>
+      <td>soga</td>
+      <td>1662019915</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:11:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1539</th>
+      <td>1131864201921301248</td>
+      <td>5988013</td>
+      <td>很优美</td>
+      <td>1662019927</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:12:07</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1540</th>
+      <td>1131866130563229696</td>
+      <td>6088359</td>
+      <td>我的数据也好奇怪</td>
+      <td>1662020157</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:15:57</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1541</th>
+      <td>1131867230964126464</td>
+      <td>6087845</td>
+      <td>我试了下左连接 出来的图也很奇怪</td>
+      <td>1662020288</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:18:08</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1542</th>
+      <td>1131872859015280384</td>
+      <td>6274006</td>
+      <td>出现表格的，你要先修改地理角色再双击</td>
+      <td>1662020959</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:29:19</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1543</th>
+      <td>1131881134360280320</td>
+      <td>6508610</td>
+      <td>刚刚好像说订单id被特殊处理了</td>
+      <td>1662021945</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 16:45:45</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1544</th>
+      <td>1131899359047272704</td>
+      <td>6781825</td>
+      <td>哈哈哈哈哈哈哈哈哈哈</td>
+      <td>1662024118</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 17:21:58</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1545</th>
+      <td>1131907090777115648</td>
+      <td>7020863</td>
+      <td>好赞</td>
+      <td>1662025040</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 17:37:20</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1546</th>
+      <td>1131909011416077568</td>
+      <td>7252631</td>
+      <td>个人认为1.25最合适</td>
+      <td>1662025269</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 17:41:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1547</th>
+      <td>1131910192767038720</td>
+      <td>7270647</td>
+      <td>幕布里的课件有</td>
+      <td>1662025409</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 17:43:29</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1548</th>
+      <td>1131922428214118656</td>
+      <td>7605596</td>
+      <td>哈哈哈哈哈哈哈哈哈</td>
+      <td>1662026868</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:07:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1549</th>
+      <td>1131924431036523520</td>
+      <td>7679556</td>
+      <td>双竖轴</td>
+      <td>1662027107</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:11:47</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1550</th>
+      <td>1131928475998041344</td>
+      <td>7810477</td>
+      <td>为啥我的同步轴没法点</td>
+      <td>1662027589</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:19:49</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1551</th>
+      <td>1131930085310644992</td>
+      <td>7876889</td>
+      <td>好美</td>
+      <td>1662027781</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:23:01</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1552</th>
+      <td>1131932373815183616</td>
+      <td>7929448</td>
+      <td>这里的应用和确定有啥区别？</td>
+      <td>1662028054</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:27:34</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1553</th>
+      <td>1131937467520326144</td>
+      <td>8165553</td>
+      <td>新老客弄掉 平台弄进来？</td>
+      <td>1662028661</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 18:37:41</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1554</th>
+      <td>1132098335000443136</td>
+      <td>8340554</td>
+      <td>这个网格底怎么搞的</td>
+      <td>1662047838</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-01 23:57:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>23</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1555</th>
+      <td>1132104757167646208</td>
+      <td>8601650</td>
+      <td>好好看</td>
+      <td>1662048603</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 00:10:03</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>0</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1556</th>
+      <td>1132509796264829696</td>
+      <td>8754849</td>
+      <td>我的Tableau10.5好像没法放扩展程序</td>
+      <td>1662096888</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 13:34:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1557</th>
+      <td>1132525504822255872</td>
+      <td>9349714</td>
+      <td>我也是这样</td>
+      <td>1662098760</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:06:00</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1558</th>
+      <td>1132530180120959744</td>
+      <td>9466721</td>
+      <td>为啥经营数据详情不用点筛选器也可以联动筛选</td>
+      <td>1662099318</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:15:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1559</th>
+      <td>1132532024632942080</td>
+      <td>9558836</td>
+      <td>只能一个个加吗。。有点不够智能了hhh</td>
+      <td>1662099538</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:18:58</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1560</th>
+      <td>1132533247046117888</td>
+      <td>9580860</td>
+      <td>不错不错</td>
+      <td>1662099683</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:21:23</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1561</th>
+      <td>1132541873630733824</td>
+      <td>9735852</td>
+      <td>师兄卷王啊</td>
+      <td>1662100712</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:38:32</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1562</th>
+      <td>1132545614496736768</td>
+      <td>9840423</td>
+      <td>蓝黑好好看</td>
+      <td>1662101158</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 14:45:58</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1563</th>
+      <td>1132556209442808832</td>
+      <td>10084019</td>
+      <td>感谢师兄</td>
+      <td>1662102421</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 15:07:01</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1564</th>
+      <td>1132556352393331968</td>
+      <td>10087798</td>
+      <td>下一节课见！</td>
+      <td>1662102438</td>
+      <td>6812827409839048297</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-09-02 15:07:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1565</th>
+      <td>1132634546635139328</td>
+      <td>306350</td>
+      <td>现在还多了个PostgreSQL</td>
+      <td>1662111759</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:42:39</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1566</th>
+      <td>1132634825623242240</td>
+      <td>331690</td>
+      <td>师兄好贴心</td>
+      <td>1662111792</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:43:12</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1567</th>
+      <td>1132635288405915648</td>
+      <td>391048</td>
+      <td>找不到就摆烂</td>
+      <td>1662111848</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:44:08</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1568</th>
+      <td>1132635456220270080</td>
+      <td>405706</td>
+      <td>130+人在陪我学习</td>
+      <td>1662111868</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 17:44:28</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1569</th>
+      <td>1132643876218467584</td>
+      <td>848036</td>
+      <td>好滴</td>
+      <td>1662112871</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 18:01:11</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1570</th>
+      <td>1132644831227871488</td>
+      <td>938139</td>
+      <td>well</td>
+      <td>1662112985</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-02 18:03:05</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1571</th>
+      <td>1133295165218331904</td>
+      <td>2593262</td>
+      <td>为啥我的SQLZOO error了。。</td>
+      <td>1662190511</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 15:35:11</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1572</th>
+      <td>1133297445686849536</td>
+      <td>2598511</td>
+      <td>error的换个浏览器就好了</td>
+      <td>1662190783</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 15:39:43</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1573</th>
+      <td>1133297670744754176</td>
+      <td>2628566</td>
+      <td>130+人陪我学SQL</td>
+      <td>1662190810</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 15:40:10</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1574</th>
+      <td>1133321966552530432</td>
+      <td>2750852</td>
+      <td>哈哈哈哈哈哈</td>
+      <td>1662193706</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 16:28:26</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1575</th>
+      <td>1133324163201845760</td>
+      <td>2941389</td>
+      <td>and的优先级是高于or吗？</td>
+      <td>1662193968</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 16:32:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1576</th>
+      <td>1133324571995512576</td>
+      <td>2996269</td>
+      <td>sogaga</td>
+      <td>1662194017</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-03 16:33:37</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1577</th>
+      <td>1134058578936669184</td>
+      <td>3931212</td>
+      <td>这里没搞懂是什么意思</td>
+      <td>1662281517</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-04 16:51:57</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1578</th>
+      <td>1134609707001081344</td>
+      <td>4180719</td>
+      <td>21行才对</td>
+      <td>1662347217</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 11:06:57</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>11</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1579</th>
+      <td>1134639110238286336</td>
+      <td>4413840</td>
+      <td>SOGA</td>
+      <td>1662350722</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 12:05:22</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>12</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1580</th>
+      <td>1134724725436880896</td>
+      <td>4494946</td>
+      <td>22年9月 sqlzoo的mysql模式输啥都是error...其他的sql倒是没问题</td>
+      <td>1662360928</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 14:55:28</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1581</th>
+      <td>1134738492207883776</td>
+      <td>5950352</td>
+      <td>这个要用嵌套吧</td>
+      <td>1662362569</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 15:22:49</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1582</th>
+      <td>1134755954101978624</td>
+      <td>6072024</td>
+      <td>逻辑清晰</td>
+      <td>1662364651</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 15:57:31</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1583</th>
+      <td>1134759124484015104</td>
+      <td>6251692</td>
+      <td>找工作要看你会不会吹水</td>
+      <td>1662365029</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 16:03:49</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1584</th>
+      <td>1134800490413224704</td>
+      <td>6586203</td>
+      <td>先了解一下 需要用到再查也可以</td>
+      <td>1662369960</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-05 17:26:00</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1585</th>
+      <td>1135432036513776128</td>
+      <td>7560990</td>
+      <td>真的好佩服师兄555</td>
+      <td>1662445246</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-06 14:20:46</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1586</th>
+      <td>1135456537305830144</td>
+      <td>7840066</td>
+      <td>好困 可我还是要坚持学下去！加油！</td>
+      <td>1662448167</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-06 15:09:27</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1587</th>
+      <td>1135458067891321600</td>
+      <td>8056979</td>
+      <td>get</td>
+      <td>1662448349</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-06 15:12:29</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1588</th>
+      <td>1135537063857262336</td>
+      <td>8692271</td>
+      <td>想不出</td>
+      <td>1662457766</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-06 17:49:26</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1589</th>
+      <td>1136117207672253440</td>
+      <td>8878469</td>
+      <td>我爱窗口函数！</td>
+      <td>1662526925</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 13:02:05</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1590</th>
+      <td>1136158824353387008</td>
+      <td>9877981</td>
+      <td>我觉得count(*)和count(1)也可以</td>
+      <td>1662531886</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 14:24:46</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1591</th>
+      <td>1136159160157630208</td>
+      <td>9890509</td>
+      <td>表格在幕布笔记的最前面啊 师兄一开场就讲了</td>
+      <td>1662531926</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 14:25:26</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1592</th>
+      <td>1136172991135450624</td>
+      <td>10006885</td>
+      <td>left join两次？</td>
+      <td>1662533575</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 14:52:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1593</th>
+      <td>1136175387852972288</td>
+      <td>10130275</td>
+      <td>妙啊</td>
+      <td>1662533860</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 14:57:40</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1594</th>
+      <td>1136203513354046976</td>
+      <td>10657961</td>
+      <td>22222</td>
+      <td>1662537213</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 15:53:33</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1595</th>
+      <td>1136204541679996928</td>
+      <td>10726277</td>
+      <td>as可以不加吗？</td>
+      <td>1662537336</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 15:55:36</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1596</th>
+      <td>1136226699047123456</td>
+      <td>10904420</td>
+      <td>那我先做完再来听~</td>
+      <td>1662539977</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-07 16:39:37</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1597</th>
+      <td>1140508022221892608</td>
+      <td>10986901</td>
+      <td>第三题我不会555</td>
+      <td>1663050351</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 14:25:51</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1598</th>
+      <td>1140509032763810048</td>
+      <td>11029294</td>
+      <td>哇靠 反向解题</td>
+      <td>1663050471</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 14:27:51</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1599</th>
+      <td>1140514438433165056</td>
+      <td>11434117</td>
+      <td>最大面积一样就一起显示出来不行吗？</td>
+      <td>1663051115</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 14:38:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1600</th>
+      <td>1140515854958630144</td>
+      <td>11463237</td>
+      <td>哦我懂了 (continenet, area)要排除的是跟这个大洲最大国家面积一样的其他大洲...</td>
+      <td>1663051284</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 14:41:24</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1601</th>
+      <td>1140531467852835328</td>
+      <td>11494232</td>
+      <td>select ... rank() over(partition by continent ...</td>
+      <td>1663053145</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 15:12:25</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1602</th>
+      <td>1140547552278578944</td>
+      <td>11547681</td>
+      <td>我没按国家分区排名诶 题目貌似没有硬性要求</td>
+      <td>1663055063</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 15:44:23</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1603</th>
+      <td>1140596936290966784</td>
+      <td>12171428</td>
+      <td>我分开保存的 绝不冲会员hhh</td>
+      <td>1663060950</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 17:22:30</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1604</th>
+      <td>1140606547429188096</td>
+      <td>12219554</td>
+      <td>我选50G和20G一样价格</td>
+      <td>1663062096</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 17:41:36</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1605</th>
+      <td>1140607614938495488</td>
+      <td>12237002</td>
+      <td>买了1.88一个月</td>
+      <td>1663062223</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 17:43:43</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1606</th>
+      <td>1140609147058961920</td>
+      <td>12257056</td>
+      <td>怎么从创建中变成运行中的，我刷新了不行诶</td>
+      <td>1663062406</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 17:46:46</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1607</th>
+      <td>1140610241512155392</td>
+      <td>12262937</td>
+      <td>可以勒</td>
+      <td>1663062536</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-13 17:48:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>2</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1608</th>
+      <td>1141193247746666752</td>
+      <td>12408851</td>
+      <td>成功了 耶耶耶</td>
+      <td>1663132036</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:07:16</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1609</th>
+      <td>1141194921550817536</td>
+      <td>12433786</td>
+      <td>Navicat我也有</td>
+      <td>1663132235</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:10:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1610</th>
+      <td>1141210150372385024</td>
+      <td>12486269</td>
+      <td>我也是一路畅通无阻</td>
+      <td>1663134051</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:40:51</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1611</th>
+      <td>1141210381235382784</td>
+      <td>12487866</td>
+      <td>我全部安装在E盘也没问题吧？</td>
+      <td>1663134078</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:41:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1612</th>
+      <td>1141212151927912704</td>
+      <td>12519550</td>
+      <td>这个sublime一直叫我下载新版本 你们会吗</td>
+      <td>1663134289</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:44:49</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1613</th>
+      <td>1141215221227226368</td>
+      <td>12566783</td>
+      <td>耶耶耶</td>
+      <td>1663134655</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:50:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1614</th>
+      <td>1141215319625481472</td>
+      <td>12570722</td>
+      <td>好久不见 甚是想念</td>
+      <td>1663134667</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:51:07</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1615</th>
+      <td>1141216338379932416</td>
+      <td>12667666</td>
+      <td>只剩20分钟了 加油！</td>
+      <td>1663134788</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 13:53:08</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>13</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1616</th>
+      <td>1141220182476262144</td>
+      <td>12798785</td>
+      <td>感谢</td>
+      <td>1663135247</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 14:00:47</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1617</th>
+      <td>1141222593588930304</td>
+      <td>12855488</td>
+      <td>一毛一样 但我少select了个日期hhh</td>
+      <td>1663135534</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 14:05:34</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1618</th>
+      <td>1141229827580467968</td>
+      <td>12881718</td>
+      <td>-- 注释</td>
+      <td>1663136396</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 14:19:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1619</th>
+      <td>1141264043890464256</td>
+      <td>12918392</td>
+      <td>啊 忘了日期</td>
+      <td>1663140475</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:27:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1620</th>
+      <td>1141264551476630272</td>
+      <td>12921179</td>
+      <td>不用左连接吗</td>
+      <td>1663140536</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:28:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1621</th>
+      <td>1141271554353748992</td>
+      <td>13089724</td>
+      <td>我觉得rank 也可</td>
+      <td>1663141371</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:42:51</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1622</th>
+      <td>1141275072007317760</td>
+      <td>13135772</td>
+      <td>为啥我这里有二百多题</td>
+      <td>1663141790</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:49:50</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1623</th>
+      <td>1141278639305136384</td>
+      <td>13438060</td>
+      <td>我竟然是32</td>
+      <td>1663142215</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:56:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1624</th>
+      <td>1141279352747610880</td>
+      <td>13531057</td>
+      <td>哈哈哈哈哈</td>
+      <td>1663142300</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-14 15:58:20</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1625</th>
+      <td>1141965569000994304</td>
+      <td>13634073</td>
+      <td>耶耶耶</td>
+      <td>1663224104</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:41:44</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1626</th>
+      <td>1141966430082787840</td>
+      <td>13652392</td>
+      <td>我咋没有ODBC</td>
+      <td>1663224206</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:43:26</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1627</th>
+      <td>1141967687619070464</td>
+      <td>13717743</td>
+      <td>好神奇</td>
+      <td>1663224356</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:45:56</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1628</th>
+      <td>1141968957813561088</td>
+      <td>13846578</td>
+      <td>真棒啊</td>
+      <td>1663224508</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:48:28</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1629</th>
+      <td>1141969117700592384</td>
+      <td>13870405</td>
+      <td>感谢师兄 完结撒花</td>
+      <td>1663224527</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:48:47</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1630</th>
+      <td>1141972950799666944</td>
+      <td>14033042</td>
+      <td>感谢！！！！！！</td>
+      <td>1663224984</td>
+      <td>6812827409839048297</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-09-15 14:56:24</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1631</th>
+      <td>1142008485119299840</td>
+      <td>64339</td>
+      <td>warning可以解决掉吗？</td>
+      <td>1663229220</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 16:07:00</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1632</th>
+      <td>1142014093817999616</td>
+      <td>62838</td>
+      <td>我的弹出Requirement already satisfied: pymysql，是已经...</td>
+      <td>1663229888</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 16:18:08</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1633</th>
+      <td>1142018136883840256</td>
+      <td>106403</td>
+      <td>耶 成功啦</td>
+      <td>1663230370</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 16:26:10</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1634</th>
+      <td>1142032556196288000</td>
+      <td>334541</td>
+      <td>我怎么打开的是另一个文件夹555</td>
+      <td>1663232089</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 16:54:49</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1635</th>
+      <td>1142036762831546624</td>
+      <td>339876</td>
+      <td>原来是我之前修改了默认路径。。</td>
+      <td>1663232591</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-15 17:03:11</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1636</th>
+      <td>1142709738228828928</td>
+      <td>508811</td>
+      <td>哈哈哈哈哈哈哈哈哈哈哈哈或或</td>
+      <td>1663312816</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-16 15:20:16</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1637</th>
+      <td>1142713910814693376</td>
+      <td>729691</td>
+      <td>为什么我无法触发</td>
+      <td>1663313313</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-16 15:28:33</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>5</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1638</th>
+      <td>1143500424200988672</td>
+      <td>1009680</td>
+      <td>hhhhh</td>
+      <td>1663407073</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:31:13</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1639</th>
+      <td>1143501010715599360</td>
+      <td>1055686</td>
+      <td>师兄注意休息</td>
+      <td>1663407143</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:32:23</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1640</th>
+      <td>54990543227968000</td>
+      <td>1265123</td>
+      <td>哈哈哈哈哈哈哈哈师兄好逗</td>
+      <td>1631977337</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2021-09-18 23:02:17</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>6</td>
+      <td>23</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1641</th>
+      <td>54990563689880064</td>
+      <td>1294299</td>
+      <td>哈哈哈哈哈哈哈哈无限欣赏</td>
+      <td>1631977376</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2021-09-18 23:02:56</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>6</td>
+      <td>23</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1642</th>
+      <td>1143503736929648640</td>
+      <td>1240829</td>
+      <td>好好玩哈哈哈哈</td>
+      <td>1663407468</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:37:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1643</th>
+      <td>1143503968371191808</td>
+      <td>1272773</td>
+      <td>哈哈哈哈哈哈哈哈哈哈哈哈或或或</td>
+      <td>1663407495</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:38:15</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1644</th>
+      <td>1143504220432154880</td>
+      <td>1279680</td>
+      <td>师兄在欣赏自己哈哈哈</td>
+      <td>1663407525</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:38:45</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1645</th>
+      <td>1143504339919424768</td>
+      <td>1297664</td>
+      <td>笑死</td>
+      <td>1663407539</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:38:59</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1646</th>
+      <td>1143505274670219776</td>
+      <td>1404945</td>
+      <td>哈哈哈哈哈</td>
+      <td>1663407651</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:40:51</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1647</th>
+      <td>1143505394166007296</td>
+      <td>1406169</td>
+      <td>上课仿佛看小品hhh</td>
+      <td>1663407665</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-17 17:41:05</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>6</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1648</th>
+      <td>1144203020704157952</td>
+      <td>1526038</td>
+      <td>enumerate()枚举函数：用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个...</td>
+      <td>1663490829</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-18 16:47:09</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1649</th>
+      <td>1144210369359948544</td>
+      <td>1725962</td>
+      <td>听这课确实要点基础 不然很懵逼哈哈哈</td>
+      <td>1663491705</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-18 17:01:45</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1650</th>
+      <td>1144255420580368896</td>
+      <td>1971418</td>
+      <td>.dtype用于返回数据元素的数据类型（int、float等）</td>
+      <td>1663497075</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-18 18:31:15</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1651</th>
+      <td>1144265819904017152</td>
+      <td>2442451</td>
+      <td>行列好容易弄混555</td>
+      <td>1663498315</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-18 18:51:55</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>18</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1652</th>
+      <td>55170028120757760</td>
+      <td>2866405</td>
+      <td>模糊查询第三个应该是str.endswith(‘x’)</td>
+      <td>1632319677</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2021-09-22 22:07:57</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>3</td>
+      <td>22</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1653</th>
+      <td>1144850517525159424</td>
+      <td>2603677</td>
+      <td>25个同学</td>
+      <td>1663568016</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 14:13:36</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1654</th>
+      <td>1144850701806307072</td>
+      <td>2607706</td>
+      <td>25个卷王</td>
+      <td>1663568038</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 14:13:58</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1655</th>
+      <td>1144854612810162688</td>
+      <td>2671135</td>
+      <td>什么bulid？没听清</td>
+      <td>1663568505</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 14:21:45</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1656</th>
+      <td>1144861575379981824</td>
+      <td>2845780</td>
+      <td>map(str)是什么作用</td>
+      <td>1663569335</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 14:35:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>14</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1657</th>
+      <td>1144874022018998016</td>
+      <td>2880964</td>
+      <td>模糊查询pandas的最后一个应该是df[df.column.str.endswith('x')]</td>
+      <td>1663570818</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:00:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1658</th>
+      <td>1144884860737964032</td>
+      <td>2959582</td>
+      <td>哇嗷~</td>
+      <td>1663572110</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:21:50</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1659</th>
+      <td>1144886446788984064</td>
+      <td>2979880</td>
+      <td>这两个题目出得有点混淆了</td>
+      <td>1663572299</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:24:59</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1660</th>
+      <td>1144887749799818496</td>
+      <td>3053565</td>
+      <td>理解并记忆吧。。</td>
+      <td>1663572455</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:27:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1661</th>
+      <td>1144888502249459200</td>
+      <td>3085997</td>
+      <td>妙啊</td>
+      <td>1663572544</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:29:04</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1662</th>
+      <td>1144892780800135424</td>
+      <td>3154081</td>
+      <td>不是显示10条数据吗</td>
+      <td>1663573055</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:37:35</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1663</th>
+      <td>1144902946946050816</td>
+      <td>3467853</td>
+      <td>了解一下用法 到时候要用直接来查就好了哈哈哈</td>
+      <td>1663574266</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 15:57:46</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>15</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1664</th>
+      <td>1144925843055911424</td>
+      <td>3784798</td>
+      <td>有点难诶 我做不出来 直接看答案好了哈哈哈</td>
+      <td>1663576996</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 16:43:16</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1665</th>
+      <td>1144927005926708480</td>
+      <td>3832181</td>
+      <td>哇靠 还能这样</td>
+      <td>1663577134</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 16:45:34</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1666</th>
+      <td>1144928564538390528</td>
+      <td>3968578</td>
+      <td>好 下课写写</td>
+      <td>1663577320</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 16:48:40</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1667</th>
+      <td>1144931897349174528</td>
+      <td>4172742</td>
+      <td>确实好不方便</td>
+      <td>1663577718</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 16:55:18</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1668</th>
+      <td>1144937828019510784</td>
+      <td>4292330</td>
+      <td>什么view？</td>
+      <td>1663578425</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 17:07:05</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1669</th>
+      <td>55217028953362944</td>
+      <td>4422567</td>
+      <td>撒花～～～</td>
+      <td>1632409324</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2021-09-23 23:02:04</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>4</td>
+      <td>23</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1670</th>
+      <td>1144938693254338304</td>
+      <td>4381973</td>
+      <td>看完了 但不太熟 还需要多练练</td>
+      <td>1663578528</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 17:08:48</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1671</th>
+      <td>1144938824493859328</td>
+      <td>4395776</td>
+      <td>感谢师兄</td>
+      <td>1663578543</td>
+      <td>6812827409839048297</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-09-19 17:09:03</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>1</td>
+      <td>17</td>
+      <td>187.0</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+发送弹幕数第二多的人发了187条弹幕，根据弹幕内容，此用户发言积极，有礼貌，气氛组组长
+
+
+```python
+#pd.set_option('display.max_rows',300) #指定dataframe展示的最大行数
+danmu_level[danmu_level['uid']=='-3260951504495839240']
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6467</th>
+      <td>1041225824386199808</td>
+      <td>183150</td>
+      <td>我来二刷；</td>
+      <td>1651214990</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 14:49:50</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6468</th>
+      <td>1047724718272178944</td>
+      <td>1228061</td>
+      <td>数据透视比表内部的筛选类似是安装依托在空调显示屏的按键，而切片器类似于无线的遥控器，可以跨工...</td>
+      <td>1651989719</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 14:01:59</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6469</th>
+      <td>1047726854649177344</td>
+      <td>1298195</td>
+      <td>WPS个人版没有“宏”功能，企业版才有，我现在改用office365了。</td>
+      <td>1651989973</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 14:06:13</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6470</th>
+      <td>1047730589240738560</td>
+      <td>1362668</td>
+      <td>这个和tableau的逻辑是相通的</td>
+      <td>1651990419</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 14:13:39</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6471</th>
+      <td>1040398014067393280</td>
+      <td>1601015</td>
+      <td>好细了</td>
+      <td>1651116308</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-28 11:25:08</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6472</th>
+      <td>1040535294920801024</td>
+      <td>1656718</td>
+      <td>1-8月直接好做，1和8月直接做我还真不会</td>
+      <td>1651132673</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-28 15:57:53</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>4</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6473</th>
+      <td>1040536250735496704</td>
+      <td>1768366</td>
+      <td>毕业论文要跨工作表引用数据，我就这样开了4个窗口，方便很多，还不会混乱，很好用的功能</td>
+      <td>1651132787</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-28 15:59:47</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>4</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6474</th>
+      <td>1040547048929113344</td>
+      <td>2123449</td>
+      <td>筛选是隐藏了2-7月的数据，要是直接都选中那么结果还是1-8月，需要先筛选，然后逗号分开加总到一起</td>
+      <td>1651134074</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-28 16:21:14</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6475</th>
+      <td>1047754076378442752</td>
+      <td>2104820</td>
+      <td>个人方法：先单独筛选出“一月”，sum求和，然后再单独筛选“八月”，使用逗号间隔将八月的数据...</td>
+      <td>1651993219</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 15:00:19</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6476</th>
+      <td>1047754871610218240</td>
+      <td>2121600</td>
+      <td>sum函数进行数据分段相加（使用逗号分隔），别使用隐藏（没用，还是会计算进去），更不要删改数...</td>
+      <td>1651993313</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 15:01:53</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6477</th>
+      <td>1047755196408639232</td>
+      <td>2121600</td>
+      <td>选择数据区域的快捷键： control + 下箭头，可以直接选到底部的数据</td>
+      <td>1651993352</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 15:02:32</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6478</th>
+      <td>1047755789298594816</td>
+      <td>2151535</td>
+      <td>将1月和8月分开两次筛选，因为你要用函数的时候不能跳出来，所以分开用逗号补上8月的数据即可</td>
+      <td>1651993423</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-08 15:03:43</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6479</th>
+      <td>1079643481602963712</td>
+      <td>1963945</td>
+      <td>shaixun\\\</td>
+      <td>1655794732</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 14:58:52</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6480</th>
+      <td>1079644107795832832</td>
+      <td>1963945</td>
+      <td>筛选但不能一次性整列加进去，会将隐藏的也加入，需要手动分别两次框选1月和8月的数据，利用逗号...</td>
+      <td>1655794807</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 15:00:07</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6481</th>
+      <td>1079647131679067904</td>
+      <td>2216650</td>
+      <td>学完SQL后就理解为“where 筛选字段 = 某值”，聚合筛选后的结果</td>
+      <td>1655795167</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 15:06:07</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6482</th>
+      <td>1048590432029725184</td>
+      <td>2552987</td>
+      <td>输入的时候建议：用快捷键F4直接添加$符号，如果是混合引用就删掉不需要的那个即可。</td>
+      <td>1652092920</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 18:42:00</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6483</th>
+      <td>1048591963756131584</td>
+      <td>2825550</td>
+      <td>20世纪初</td>
+      <td>1652093103</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 18:45:03</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6484</th>
+      <td>1048592467072404224</td>
+      <td>2915523</td>
+      <td>提纲</td>
+      <td>1652093163</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 18:46:03</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6485</th>
+      <td>1048595054379217408</td>
+      <td>2981959</td>
+      <td>SUMIFS将求和区域“sum-range”给提前到首位了，而SUMIF的求和区域是在最后</td>
+      <td>1652093471</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 18:51:11</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6486</th>
+      <td>1048596655001163264</td>
+      <td>3170223</td>
+      <td>在公式里直接手动输入</td>
+      <td>1652093662</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 18:54:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6487</th>
+      <td>1079661512756344576</td>
+      <td>3121172</td>
+      <td>多字段求和，两个判断字段——日期，平台。（要求“日期=某天”、“平台=美团”）</td>
+      <td>1655796881</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 15:34:41</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6488</th>
+      <td>1048607349125813504</td>
+      <td>3478036</td>
+      <td>目的：简化输入</td>
+      <td>1652094937</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 19:15:37</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6489</th>
+      <td>1041035392683505920</td>
+      <td>3791658</td>
+      <td>这里的“日同比”有两种（按周计的、按月计的）</td>
+      <td>1651192289</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 08:31:29</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6490</th>
+      <td>1041035925745878528</td>
+      <td>3813911</td>
+      <td>问题：7月31日进行按月的日同比没有可比数据？没有6月31日啊，岂不是会报错?</td>
+      <td>1651192353</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 08:32:33</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6491</th>
+      <td>1048620453582723072</td>
+      <td>3802856</td>
+      <td>先写出来日期，然后两个相减，根据计算结果输入“-n”</td>
+      <td>1652096499</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 19:41:39</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6492</th>
+      <td>1079668893750089472</td>
+      <td>3837711</td>
+      <td>这三个函数功能是提取作用，然后进行自己个性化的运算，比如加减几天，月，年，到自己想要的那个日...</td>
+      <td>1655797761</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 15:49:21</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6493</th>
+      <td>1048630932346525952</td>
+      <td>4576354</td>
+      <td>下月减1</td>
+      <td>1652097748</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-09 20:02:28</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6494</th>
+      <td>1049023405426735616</td>
+      <td>4650828</td>
+      <td>函数正确，但显示为“2020-01”是因为单元格格式的日期格式问题，改过来就好</td>
+      <td>1652144534</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-10 09:02:14</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6495</th>
+      <td>1079689989882685952</td>
+      <td>4611782</td>
+      <td>下月的第0天</td>
+      <td>1655800276</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 16:31:16</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6496</th>
+      <td>1049177935422061056</td>
+      <td>5250794</td>
+      <td>跟着筛选变化，相当于数据区域内显示有什么才会求和，而sum是加总整个数据区域，无论是否被隐藏</td>
+      <td>1652162956</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-10 14:09:16</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6497</th>
+      <td>1049184114168724224</td>
+      <td>5270415</td>
+      <td>subtotal“筛选计数-求和”，只会对筛选后显示的数据进行求和，sum是区域内数据全部求和</td>
+      <td>1652163692</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-10 14:21:32</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6498</th>
+      <td>1079742340937235712</td>
+      <td>5512890</td>
+      <td>这里的关键是理解if在判断多个条件时，不能直接使用类似and的平行连接，从第二个判断开始就得...</td>
+      <td>1655806517</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 18:15:17</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6499</th>
+      <td>1041055110945360384</td>
+      <td>5802834</td>
+      <td>我还以为哪里外面的铃声</td>
+      <td>1651194640</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 09:10:40</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6500</th>
+      <td>1049736295020124928</td>
+      <td>5795559</td>
+      <td>大家一起来提纲，嘎嘎嘎</td>
+      <td>1652229517</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-11 08:38:37</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>3</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6501</th>
+      <td>1079746469667460608</td>
+      <td>5907289</td>
+      <td>从SQL的角度理解，这里有点像是以门店ID为连接条件的多表连接，不过这里是从一张表赋值到另一...</td>
+      <td>1655807009</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 18:23:29</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6502</th>
+      <td>1041067915232786432</td>
+      <td>6550833</td>
+      <td>班尼路！</td>
+      <td>1651196166</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 09:36:06</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6503</th>
+      <td>1079761261853498368</td>
+      <td>6515502</td>
+      <td>这里就是说明VLOOKUP函数的查找区域不仅是一般的表格，也可以是“数据透视表”，可以将数透...</td>
+      <td>1655808772</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-21 18:52:52</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6504</th>
+      <td>1041071095102473728</td>
+      <td>6873272</td>
+      <td>match  定位</td>
+      <td>1651196545</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 09:42:25</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6505</th>
+      <td>1041075016751546880</td>
+      <td>7072181</td>
+      <td>你就想象成根据match函数确定的行列坐标，index骑士过去就出了单元格里的公主出来</td>
+      <td>1651197013</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 09:50:13</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6506</th>
+      <td>1050676435242469888</td>
+      <td>6884848</td>
+      <td>match定位函数，index提取函数，两者嵌套使用，可以借用match的定位功能确定行列序...</td>
+      <td>1652341591</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 15:46:31</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6507</th>
+      <td>1050689630514515968</td>
+      <td>7107476</td>
+      <td>用VLOOKUP和MATCH函数也可以，但要注意引用时候的绝对、相对、混合引用的设置，首列设...</td>
+      <td>1652343164</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 16:12:44</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6508</th>
+      <td>1050697371194906880</td>
+      <td>7233194</td>
+      <td>实质是：源数据为一个大表，这里是提取出来了一个小表。  而两个函数的嵌套使用就是从大表中提取...</td>
+      <td>1652344087</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 16:28:07</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6509</th>
+      <td>1050698144959959808</td>
+      <td>7280196</td>
+      <td>列数如果手动输入，那么每一列你都得自己找到然后手输，无法实现句柄拖动即填充的效果。</td>
+      <td>1652344179</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 16:29:39</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6510</th>
+      <td>1050698750676273664</td>
+      <td>7308545</td>
+      <td>要理解，这里是在从源数据的大表中提出来了一个小表，那就很好理解了</td>
+      <td>1652344251</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 16:30:51</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6511</th>
+      <td>1041095552718156032</td>
+      <td>7604626</td>
+      <td>这个是绝对引用与相对引用，最好先去了解基础，再来看这里会清除很多</td>
+      <td>1651199461</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 10:31:01</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>10</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6512</th>
+      <td>1050700905256809472</td>
+      <td>7592699</td>
+      <td>这里的混合引用，如果没有理解，建议自己在Excel里做一个可以拖拽生成的九九乘法表，多做几次...</td>
+      <td>1652344508</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-12 16:35:08</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6513</th>
+      <td>1051524024028583168</td>
+      <td>8179871</td>
+      <td>由于源数据中有多个日期，所以一个“门店名称”会对应多个GMV，因此是将同一个门店的不同日期的...</td>
+      <td>1652442631</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-13 19:50:31</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>5</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6514</th>
+      <td>1080255411422076928</td>
+      <td>8149140</td>
+      <td>而且VLOOKUP有很严重的限制，你想要聚合的字段在主键的左侧就买办法使用了，工作中的数据源...</td>
+      <td>1655867680</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-22 11:14:40</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>3</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6515</th>
+      <td>1080372451579403264</td>
+      <td>8314094</td>
+      <td>这里就是为了省事儿，到下一周直接改第一行就可以全改，不用再句柄拖动一次</td>
+      <td>1655881632</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-22 15:07:12</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>3</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6516</th>
+      <td>1080372781075472384</td>
+      <td>8331221</td>
+      <td>前提：存储到数据库中的数据，永远不要用日期格式存储日期</td>
+      <td>1655881671</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-22 15:07:51</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>3</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6517</th>
+      <td>1041185359293118464</td>
+      <td>8978893</td>
+      <td>括号的问题，在编辑的时候就按对儿去设置，先括号再内容，就不容易错。</td>
+      <td>1651210166</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-04-29 13:29:26</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6518</th>
+      <td>1051528169183694592</td>
+      <td>8861677</td>
+      <td>INDEX与MATCH嵌套，将对应字段列的数据提取出来，然后判断求和。</td>
+      <td>1652443125</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-05-13 19:58:45</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>5</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6519</th>
+      <td>1080378217354949888</td>
+      <td>8666646</td>
+      <td>实际的话，我会直接两个都用SUMIFS，这样就是一致的，不用切换求和区域的前后位置，不出错还省脑子</td>
+      <td>1655882319</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-22 15:18:39</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>3</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6520</th>
+      <td>1080379872326518528</td>
+      <td>8753347</td>
+      <td>当平台=全部，就只有一个筛选字段，当平台不等于全部，那么就增加了一个筛选字段“平台”，两个路...</td>
+      <td>1655882517</td>
+      <td>-3260951504495839240</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-06-22 15:21:57</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>3</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6521</th>
+      <td>1075950340400056832</td>
+      <td>194746</td>
+      <td>未名学院的前面2/3课程还好，后面几集就念PPT自顾自的讲，也不说他在干嘛，精力都花到得先明...</td>
+      <td>1655354475</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-16 12:41:15</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6522</th>
+      <td>1041386230845055744</td>
+      <td>1520001</td>
+      <td>故意骗公司资金的</td>
+      <td>1651234112</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:08:32</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6523</th>
+      <td>1041392506488976384</td>
+      <td>2243818</td>
+      <td>不能与WPS连接？</td>
+      <td>1651234860</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:21:00</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6524</th>
+      <td>1041394032678400256</td>
+      <td>2368277</td>
+      <td>这个比喻挺好</td>
+      <td>1651235042</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:24:02</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6525</th>
+      <td>1041931794687422720</td>
+      <td>2371298</td>
+      <td>这里是将两个表中含义相同但字段名称不同的进行等价设置，这样就可以关联到一起。</td>
+      <td>1651299148</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 14:12:28</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6526</th>
+      <td>1041936446908297216</td>
+      <td>2686833</td>
+      <td>类似拆分单元格</td>
+      <td>1651299703</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 14:21:43</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6527</th>
+      <td>1080983543737440256</td>
+      <td>2622397</td>
+      <td>where</td>
+      <td>1655954480</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 11:21:20</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6528</th>
+      <td>1041397468920581632</td>
+      <td>2898119</td>
+      <td>单次点击成本</td>
+      <td>1651235452</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:30:52</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6529</th>
+      <td>1041951950968955904</td>
+      <td>3125623</td>
+      <td>2</td>
+      <td>1651301551</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 14:52:31</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6530</th>
+      <td>1041401089955558144</td>
+      <td>3458922</td>
+      <td>这么形象吗！</td>
+      <td>1651235884</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:38:04</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6531</th>
+      <td>1042025640418732544</td>
+      <td>3954669</td>
+      <td>相当于店小来的人多，就会浪费进店人数，转化率降低</td>
+      <td>1651310336</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:18:56</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6532</th>
+      <td>1080994888658690816</td>
+      <td>3954539</td>
+      <td>是的，你是色盲</td>
+      <td>1655955832</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 11:43:52</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6533</th>
+      <td>1041405110514834944</td>
+      <td>4050794</td>
+      <td>这个和数据透视表的原理一样</td>
+      <td>1651236363</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-29 20:46:03</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6534</th>
+      <td>1042029299227909120</td>
+      <td>4242514</td>
+      <td>因为只有一个维度，相当于是被压扁了</td>
+      <td>1651310772</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:26:12</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6535</th>
+      <td>1080997994909871616</td>
+      <td>4220892</td>
+      <td>自动对维度进行group  by  ，则对应的GMV就是也同样被分组显示</td>
+      <td>1655956202</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 11:50:02</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6536</th>
+      <td>1041878234473592576</td>
+      <td>4657126</td>
+      <td>很聪明的图，即表示了时间维度，又能在每一个扇形中递进表达数量和层次关系</td>
+      <td>1651292764</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:26:04</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6537</th>
+      <td>1042032981079946496</td>
+      <td>4330428</td>
+      <td>作业结果不同的看这里： 设置日期-自定义-精确日期，图形就会一样了</td>
+      <td>1651311211</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:33:31</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6538</th>
+      <td>1042035490901043712</td>
+      <td>4389989</td>
+      <td>不能排序的： 日期-离散，就可以选择排序了</td>
+      <td>1651311510</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:38:30</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6539</th>
+      <td>1042036006615933184</td>
+      <td>4411905</td>
+      <td>作图只是表面，需要理解背后的作图逻辑才行</td>
+      <td>1651311572</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:39:32</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6540</th>
+      <td>1042041164318051328</td>
+      <td>4530202</td>
+      <td>韭菜盒子</td>
+      <td>1651312186</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 17:49:46</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6541</th>
+      <td>1081005183904849920</td>
+      <td>4365554</td>
+      <td>维度可以对数据进行分组</td>
+      <td>1655957059</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 12:04:19</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6542</th>
+      <td>1041878532671861504</td>
+      <td>4690340</td>
+      <td>细菌感染</td>
+      <td>1651292799</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:26:39</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6543</th>
+      <td>1041878665899574528</td>
+      <td>4706146</td>
+      <td>以前医生做手术都不洗手的</td>
+      <td>1651292815</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:26:55</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6544</th>
+      <td>1042063128805979136</td>
+      <td>5225084</td>
+      <td>“</td>
+      <td>1651314805</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 18:33:25</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6545</th>
+      <td>1042063785289922048</td>
+      <td>5225084</td>
+      <td>这里意思是组合了一个“总-分-细分”的层级结构，“品牌-门店-平台”是这个层级结构的名字，换...</td>
+      <td>1651314883</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 18:34:43</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6546</th>
+      <td>1042112346614898432</td>
+      <td>5399782</td>
+      <td>也可以不用Ctrl去复制，而是再重新从左侧列表拖动一次到标签</td>
+      <td>1651320672</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 20:11:12</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6547</th>
+      <td>1081104261586216192</td>
+      <td>5237748</td>
+      <td>感觉更是一个锦上添花的小功能，将一组下钻的字段整合到一起，方便管理，不使用这个结构，直接手动...</td>
+      <td>1655968870</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 15:21:10</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6548</th>
+      <td>1081105257355811840</td>
+      <td>5293158</td>
+      <td>这里其实筛选器就是SQL的where作用，从数据刚提取的时候就人为要求要那一部分，提高效率。</td>
+      <td>1655968989</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 15:23:09</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6549</th>
+      <td>1042115395512716800</td>
+      <td>5693409</td>
+      <td>今天到此为止啦</td>
+      <td>1651321035</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 20:17:15</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6550</th>
+      <td>1081162963479538176</td>
+      <td>5564238</td>
+      <td>相对百分比这个感觉不太讨喜</td>
+      <td>1655975868</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-23 17:17:48</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6551</th>
+      <td>1045531818146709760</td>
+      <td>5936783</td>
+      <td>emotional  damage ！</td>
+      <td>1651728305</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-05-05 13:25:05</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6552</th>
+      <td>1081854090079670016</td>
+      <td>6278481</td>
+      <td>我点击另一个地图为什么没有任何反应</td>
+      <td>1656058257</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-24 16:10:57</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6553</th>
+      <td>1081864125564477696</td>
+      <td>6350166</td>
+      <td>奇怪，步骤相同，但只有一个点，放大也没用啊</td>
+      <td>1656059453</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-24 16:30:53</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6554</th>
+      <td>1081872959481849088</td>
+      <td>6311066</td>
+      <td>我的点怎么在上海外面了</td>
+      <td>1656060506</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-24 16:48:26</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6555</th>
+      <td>1086924138616224256</td>
+      <td>6356250</td>
+      <td>注意喽：蓝点在上海外边的解决方法——刷新数据源。亲测有效！！！  有效就赞一下哦，给后面的同...</td>
+      <td>1656662654</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 16:04:14</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6556</th>
+      <td>1086924239354812672</td>
+      <td>6363675</td>
+      <td>注意喽：蓝点在上海外边的解决方法——刷新数据源。亲测有效！！！  有效就赞一下哦，给后面的同...</td>
+      <td>1656662666</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 16:04:26</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6557</th>
+      <td>1041885305382586368</td>
+      <td>6691354</td>
+      <td>这叫数据优化</td>
+      <td>1651293607</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:40:07</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6558</th>
+      <td>1041885746430034176</td>
+      <td>6743892</td>
+      <td>拍照时候向后靠显得脸小</td>
+      <td>1651293659</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:40:59</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6559</th>
+      <td>1041893388300963328</td>
+      <td>6778063</td>
+      <td>工作中这种人恶心的很哦，曲解抠字眼，突出存在感</td>
+      <td>1651294570</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:56:10</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6560</th>
+      <td>1041893716706659328</td>
+      <td>6794891</td>
+      <td>要有政治性觉悟，不做就不会错</td>
+      <td>1651294609</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:56:49</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6561</th>
+      <td>1045544374861219328</td>
+      <td>6737997</td>
+      <td>近大远小</td>
+      <td>1651729802</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-05-05 13:50:02</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6562</th>
+      <td>1086031208632076544</td>
+      <td>6760874</td>
+      <td>近大远小   像拍照时近处的人脸更圆更大</td>
+      <td>1656556208</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-30 10:30:08</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>10</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6563</th>
+      <td>1041895122192785408</td>
+      <td>6961447</td>
+      <td>增量还是存量</td>
+      <td>1651294777</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 12:59:37</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6564</th>
+      <td>1041895409435406336</td>
+      <td>6995719</td>
+      <td>fantastic1</td>
+      <td>1651294811</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:00:11</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6565</th>
+      <td>1041896902188252416</td>
+      <td>7173676</td>
+      <td>女为悦己者容</td>
+      <td>1651294989</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:03:09</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6566</th>
+      <td>1041897146531596800</td>
+      <td>7202757</td>
+      <td>给领导准备好抓手</td>
+      <td>1651295018</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:03:38</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6567</th>
+      <td>1041900874236033792</td>
+      <td>7608756</td>
+      <td>你要报少了，领导不会觉得你能干，反而会觉得你糊弄，没好好做</td>
+      <td>1651295462</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:11:02</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6568</th>
+      <td>1041903019454711040</td>
+      <td>7832519</td>
+      <td>要看相关性，联动变化时就需要放在一起双轴看</td>
+      <td>1651295718</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:15:18</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6569</th>
+      <td>1086053115867761664</td>
+      <td>7787525</td>
+      <td>百分比是数据除以100，肯定会很小，和那种上千的数据相比，就会躺平在个位数的位置，所以分开不...</td>
+      <td>1656558820</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-30 11:13:40</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6570</th>
+      <td>1041904428866707712</td>
+      <td>7999620</td>
+      <td>像注释</td>
+      <td>1651295886</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:18:06</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6571</th>
+      <td>1041905220591942144</td>
+      <td>8080729</td>
+      <td>两个饼图叠放在一起</td>
+      <td>1651295981</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-04-30 13:19:41</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6572</th>
+      <td>1086243498925015552</td>
+      <td>7925451</td>
+      <td>IFNULL是空值判断函数，如果单元格内非空值则不变，如果为空值则令空值换为具体的数值0，空...</td>
+      <td>1656581515</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-30 17:31:55</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6573</th>
+      <td>1086336329434030080</td>
+      <td>8168203</td>
+      <td>整体架构不变，只需要将相关的度量内容进行更换即可</td>
+      <td>1656592582</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-06-30 20:36:22</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6574</th>
+      <td>1086789652033063680</td>
+      <td>8642112</td>
+      <td>师兄这里说的不对，如果只是1个中心那就是同心圆状的，这里是两个配送中心</td>
+      <td>1656646622</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 11:37:02</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6575</th>
+      <td>1086932170574148864</td>
+      <td>8983971</td>
+      <td>我拖日期上去显示的1,2,3,4......不是正确的日期，变成了序号？？？</td>
+      <td>1656663611</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 16:20:11</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6576</th>
+      <td>1086955280769669120</td>
+      <td>8867206</td>
+      <td>前面的你狠委婉</td>
+      <td>1656666366</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 17:06:06</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6577</th>
+      <td>1086945731799079424</td>
+      <td>9042864</td>
+      <td>没看见师兄右上角的门店筛选器吗，他只选择显示了2家门店</td>
+      <td>1656665228</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 16:47:08</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6578</th>
+      <td>1086980568840705536</td>
+      <td>9384735</td>
+      <td>调到同样的一个刻度上</td>
+      <td>1656669381</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 17:56:21</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6579</th>
+      <td>1086986794890712576</td>
+      <td>9558901</td>
+      <td>设置为“浮动”，就可以自由拖拽移动了</td>
+      <td>1656670123</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 18:08:43</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6580</th>
+      <td>1086988273836111616</td>
+      <td>9571739</td>
+      <td>坐标轴直接鼠标放在轴上，右键-勾选掉“显示标记”，还有水平虚线，称为零值线，在设置格式中-线...</td>
+      <td>1656670299</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 18:11:39</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6581</th>
+      <td>1086993396079418368</td>
+      <td>9615362</td>
+      <td>点击那个表格，然后  右键-设置格式-框线“田”-行分隔符-无</td>
+      <td>1656670910</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 18:21:50</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6582</th>
+      <td>1087085698718129152</td>
+      <td>10067204</td>
+      <td>撒花，谢谢戴师兄！</td>
+      <td>1656681913</td>
+      <td>-3260951504495839240</td>
+      <td>3、Tableau数据可视化.xlsx</td>
+      <td>2022-07-01 21:25:13</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6583</th>
+      <td>1074399123228298240</td>
+      <td>578616</td>
+      <td>这里的运行顺序应该为：from - where - group by - having - ...</td>
+      <td>1655169556</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 09:19:16</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>9</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6584</th>
+      <td>1050547805762028800</td>
+      <td>1643751</td>
+      <td>distinct 不同的，有区别的   select distinct continent ...</td>
+      <td>1652326257</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 11:30:57</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6585</th>
+      <td>1050553178522685696</td>
+      <td>1929871</td>
+      <td>select  from  从表格中提取字段对应的数据，以表格为载体的形式呈现出来</td>
+      <td>1652326898</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 11:41:38</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>11</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6586</th>
+      <td>1050582830549219072</td>
+      <td>2011244</td>
+      <td>对呀  和我想到的一样  限定性状语从句</td>
+      <td>1652330432</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 12:40:32</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6587</th>
+      <td>1050584791344269568</td>
+      <td>2090075</td>
+      <td>数据结果不一样的，你们的语言选择必须用“英语”，别用中文，不然结果可能就和师兄的不一样，可能...</td>
+      <td>1652330666</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 12:44:26</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6588</th>
+      <td>1050587228176128000</td>
+      <td>2192979</td>
+      <td>海马   蚯蚓</td>
+      <td>1652330957</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 12:49:17</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6589</th>
+      <td>1050593365340655616</td>
+      <td>2425630</td>
+      <td>where name='Germany' or name='Denmark' or name...</td>
+      <td>1652331688</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 13:01:28</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6590</th>
+      <td>1050622183849778432</td>
+      <td>2666385</td>
+      <td>f英文状态的  shift + -  结果为 _</td>
+      <td>1652335124</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 13:58:44</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6591</th>
+      <td>1050623651881259776</td>
+      <td>2666385</td>
+      <td>_t%  第二位为t的国家名 ； %t%  含t的国家名</td>
+      <td>1652335299</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 14:01:39</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6592</th>
+      <td>1050624256028809472</td>
+      <td>2720217</td>
+      <td>%o__o%    像不像师兄</td>
+      <td>1652335371</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 14:02:51</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6593</th>
+      <td>1050627993187302656</td>
+      <td>2957721</td>
+      <td>先and后or,先且后或，类似于“先乘除后加减”</td>
+      <td>1652335816</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 14:10:16</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6594</th>
+      <td>1050753290125658880</td>
+      <td>3101320</td>
+      <td>in的本质就是或的集合吧，in（A或B或C),其中的逗号就是=或   我是这么理解的</td>
+      <td>1652350753</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 18:19:13</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6595</th>
+      <td>1050754325246140672</td>
+      <td>3143169</td>
+      <td>between...and...是默认含等，所以想要做成开区间，就需要在对应位置再加一次条件...</td>
+      <td>1652350876</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 18:21:16</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6596</th>
+      <td>1050756988428015616</td>
+      <td>3206345</td>
+      <td>!就是不   !=  就是  不等于</td>
+      <td>1652351194</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-12 18:26:34</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6597</th>
+      <td>1052100366109408256</td>
+      <td>3529573</td>
+      <td>干嘛查英语哦，点击那个链接，就有对应的表格，上面写着对应的英文啊</td>
+      <td>1652511337</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 14:55:37</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6598</th>
+      <td>1052101077043836160</td>
+      <td>3565381</td>
+      <td>where（条件1 and 条件2）or （条件A and 条件B）</td>
+      <td>1652511421</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 14:57:01</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6599</th>
+      <td>1052201479907215360</td>
+      <td>3662542</td>
+      <td>升序  ascending ; 降序  descening</td>
+      <td>1652523390</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 18:16:30</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6600</th>
+      <td>1052204895119255296</td>
+      <td>3678540</td>
+      <td>姓名升序，指A到Z</td>
+      <td>1652523797</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 18:23:17</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6601</th>
+      <td>1052240515069785344</td>
+      <td>3934440</td>
+      <td>Incorrect syntax near the keyword 'in'. 这是为什么啊...</td>
+      <td>1652528044</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 19:34:04</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6602</th>
+      <td>1052241227749124864</td>
+      <td>3942341</td>
+      <td>Incorrect syntax near the keyword 'in'. 这个报错的，...</td>
+      <td>1652528129</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 19:35:29</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6603</th>
+      <td>1052248044097001728</td>
+      <td>4052065</td>
+      <td>戴师兄就给大家讲个案例，咋较这个真呢，你们是以为这是联合国云会议啊</td>
+      <td>1652528941</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 19:49:01</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6604</th>
+      <td>1052249581200573696</td>
+      <td>4167601</td>
+      <td>先order排序，然后limit 99,21</td>
+      <td>1652529124</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 19:52:04</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6605</th>
+      <td>1052251539957150976</td>
+      <td>4242765</td>
+      <td>group by 某字段   根据某字段进行聚合运算</td>
+      <td>1652529358</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-14 19:55:58</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>6</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6606</th>
+      <td>1052642451380076032</td>
+      <td>4369944</td>
+      <td>count(*)  计数函数</td>
+      <td>1652575958</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 08:52:38</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6607</th>
+      <td>1052642820067825920</td>
+      <td>4371138</td>
+      <td>那count（*）得出的结果会包含标题行的吧，所以应为国家数量+1，对不？</td>
+      <td>1652576002</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 08:53:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6608</th>
+      <td>1052643409870960384</td>
+      <td>4419531</td>
+      <td>意思就是 count()  计数只会计有效值，空值是不计入的</td>
+      <td>1652576073</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 08:54:33</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>8</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6609</th>
+      <td>1052680553721136384</td>
+      <td>4643762</td>
+      <td>group by 就是分组打包，同样的归集到一起，和count联用就可以以此分组原则计数其中的数量</td>
+      <td>1652580500</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 10:08:20</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>10</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6610</th>
+      <td>1052681833528951296</td>
+      <td>4756711</td>
+      <td>提取的表格已经不是最初的&lt;world&gt;,而是被分组后的另一张&lt;world&gt;表格。</td>
+      <td>1652580653</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 10:10:53</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>10</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6611</th>
+      <td>1052747378655922432</td>
+      <td>5675618</td>
+      <td>各自的人口数那就不用聚合函数了，直接population</td>
+      <td>1652588467</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 12:21:07</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>12</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6612</th>
+      <td>1052777441967244032</td>
+      <td>5845054</td>
+      <td>where 是对源表格进行筛选，而 having是先聚合，对新的表格进行条件筛选，保留符合要...</td>
+      <td>1652592050</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 13:20:50</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>13</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6613</th>
+      <td>1052809287623155968</td>
+      <td>5960557</td>
+      <td>hahaha   我一遍过写对了</td>
+      <td>1652595847</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 14:24:07</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6614</th>
+      <td>1052810033009664512</td>
+      <td>5980444</td>
+      <td>先筛选where，再分组group by,最后保留having</td>
+      <td>1652595936</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 14:25:36</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6615</th>
+      <td>1052812549432767744</td>
+      <td>6219733</td>
+      <td>select  和 from要分开看，先是from调取源数据表格，然后个人根据要求用一系列的...</td>
+      <td>1652596236</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 14:30:36</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6616</th>
+      <td>1052813815172833024</td>
+      <td>6224560</td>
+      <td>运行逻辑顺序—— from--where--group by--having--order ...</td>
+      <td>1652596386</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 14:33:06</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6617</th>
+      <td>1052820647417344256</td>
+      <td>6410258</td>
+      <td>成功 + 1</td>
+      <td>1652597201</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 14:46:41</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6618</th>
+      <td>1052836088269418240</td>
+      <td>6662991</td>
+      <td>这和Python不一样，Python的第二个数也是代表序数，而SQL里的函数第二个数代表个数。</td>
+      <td>1652599042</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 15:17:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6619</th>
+      <td>1052840435086674944</td>
+      <td>6937370</td>
+      <td>我也咩听懂</td>
+      <td>1652599560</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 15:26:00</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6620</th>
+      <td>1052843924940537088</td>
+      <td>6945157</td>
+      <td>这个是“select case”语句，针对多重判断任务反复进行操作处理</td>
+      <td>1652599976</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 15:32:56</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6621</th>
+      <td>1052848670996943616</td>
+      <td>7021078</td>
+      <td>看一段就得歇一会儿，CPU会过热</td>
+      <td>1652600542</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 15:42:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6622</th>
+      <td>1052942863186340096</td>
+      <td>7042787</td>
+      <td>卡尔提醒你  该喝水水了</td>
+      <td>1652611770</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 18:49:30</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6623</th>
+      <td>1052946567847377152</td>
+      <td>7106088</td>
+      <td>看不懂堆逻辑关系的，去搜一下“Select Case 语句”</td>
+      <td>1652612212</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 18:56:52</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6624</th>
+      <td>1052950347166986240</td>
+      <td>7346848</td>
+      <td>朕  决定先跳过这一part</td>
+      <td>1652612662</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-15 19:04:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>7</td>
+      <td>19</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6625</th>
+      <td>1074440719751496704</td>
+      <td>7818314</td>
+      <td>实际运行顺序，select在orderby之前，其实orderby和limit才是最后运行的。</td>
+      <td>1655174514</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 10:41:54</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>10</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6626</th>
+      <td>1053537915369470720</td>
+      <td>8063788</td>
+      <td>rank 可并列跳跃型排序；desen_rank 可并列连续性排序；row_numuber ...</td>
+      <td>1652682706</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-16 14:31:46</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>14</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6627</th>
+      <td>1053605339779375360</td>
+      <td>8090671</td>
+      <td>睡了一觉，醒来再看我就瞬间都悟了。</td>
+      <td>1652690744</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-16 16:45:44</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6628</th>
+      <td>1053609805740011520</td>
+      <td>8125422</td>
+      <td>创建新字段</td>
+      <td>1652691276</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-16 16:54:36</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6629</th>
+      <td>1053645487036586496</td>
+      <td>8443679</td>
+      <td>创建新字段，同时直接进行赋值</td>
+      <td>1652695529</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-16 18:05:29</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>18</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6630</th>
+      <td>1054279547807260416</td>
+      <td>9479370</td>
+      <td>A join B on A.a=B.b A表与B表以a和b两个字段进行钩连</td>
+      <td>1652771115</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-17 15:05:15</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6631</th>
+      <td>1054285873111124736</td>
+      <td>9735331</td>
+      <td>因为有些老师没上课，哈哈</td>
+      <td>1652771869</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-17 15:17:49</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6632</th>
+      <td>1054306510731090944</td>
+      <td>9923386</td>
+      <td>你用count()计数，那用name/actorid/ord都可以；如果用sum()求和，那...</td>
+      <td>1652774330</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-17 15:58:50</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>15</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6633</th>
+      <td>1054307150152742912</td>
+      <td>9952229</td>
+      <td>最后一步计数里，我用actorid替换为ord,不知道为何报错</td>
+      <td>1652774406</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-17 16:00:06</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6634</th>
+      <td>1054308152113299712</td>
+      <td>10212249</td>
+      <td>having 保留显示   与where的筛选剔除是不一样的</td>
+      <td>1652774525</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-05-17 16:02:05</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>16</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6635</th>
+      <td>1074750382799928576</td>
+      <td>12130418</td>
+      <td>诶？我看安装视频，MySQL在Mac上比较好安装，我的装了，虽然也碰见小问题但也解决了，反而...</td>
+      <td>1655211429</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 20:57:09</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>20</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6636</th>
+      <td>1173205067038614784</td>
+      <td>11983843</td>
+      <td>投递的新工作，要求从0开始搭建数据库，我又回来看这个部分了</td>
+      <td>1666948142</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-10-28 17:09:02</td>
+      <td>2022</td>
+      <td>10</td>
+      <td>5</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6637</th>
+      <td>1173206473589718016</td>
+      <td>12131283</td>
+      <td>Mac还能是华为的？  你这爱国爱过头了吧</td>
+      <td>1666948310</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-10-28 17:11:50</td>
+      <td>2022</td>
+      <td>10</td>
+      <td>5</td>
+      <td>17</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6638</th>
+      <td>1074752221826037248</td>
+      <td>12427723</td>
+      <td>没懂这个数据库，我是装的MySQL和Navicat</td>
+      <td>1655211648</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 21:00:48</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6639</th>
+      <td>1074754021769694208</td>
+      <td>12706320</td>
+      <td>describe  描述表格属性</td>
+      <td>1655211863</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 21:04:23</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6640</th>
+      <td>1074756812634329088</td>
+      <td>13179827</td>
+      <td>在做入门题和必知必会 ，后面的进阶题型属于“增删改”没学习就做不了。</td>
+      <td>1655212196</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 21:09:56</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6641</th>
+      <td>1074761560896944896</td>
+      <td>13899570</td>
+      <td>啥意思，是说刷新就会使数据返回出厂设置一样么</td>
+      <td>1655212762</td>
+      <td>-3260951504495839240</td>
+      <td>4、SQL从入门到实战.xlsx</td>
+      <td>2022-06-14 21:19:22</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>2</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6642</th>
+      <td>1181309003314210048</td>
+      <td>706467</td>
+      <td>友友加油，我先去睡会儿，等会儿过来陪大家</td>
+      <td>1667914207</td>
+      <td>-3260951504495839240</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-11-08 21:30:07</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>2</td>
+      <td>21</td>
+      <td>176.0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+发送弹幕数第三多的人发了176条弹幕，根据弹幕内容，此用户为二刷用户，发言积极，经常发送课程相关操作内容
+
+## 等级分布
+
+
+```python
+danmu_level.groupby('level')[['uid']].count().plot(kind='bar')
+```
+
+
+
+
+    <Axes: xlabel='level'>
+
+
+
+
+    
+![png](output_47_1.png)
+    
+
+
+大部分弹幕来自于4、5级用户，基本为b站的粘性用户，同时也有不少0级用户，可能为站外来源用户或者非粘性用户
+
+
+```python
+danmu_level.groupby('level')[['uid']].nunique().plot(kind='bar')
+```
+
+
+
+
+    <Axes: xlabel='level'>
+
+
+
+
+    
+![png](output_49_1.png)
+    
+
+
+# 视频内容
+
+## 视频内容处理
+
+
+```python
+from time import strftime
+from time import gmtime
+```
+
+
+```python
+danmu['progress'] = danmu['progress']/1000 #毫秒转为秒
+```
+
+
+```python
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2.691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9.193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23.017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31.033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68.093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404.199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412.898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407.770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 12 columns</p>
+</div>
+
+
+
+
+```python
+danmu['progress'].map(gmtime) #年月日时分秒 周几 年的第几天 是否为夏令时
+```
+
+
+
+
+    0         (1970, 1, 1, 0, 0, 2, 3, 1, 0)
+    1         (1970, 1, 1, 0, 0, 9, 3, 1, 0)
+    2        (1970, 1, 1, 0, 0, 23, 3, 1, 0)
+    3        (1970, 1, 1, 0, 0, 31, 3, 1, 0)
+    4         (1970, 1, 1, 0, 1, 8, 3, 1, 0)
+                          ...               
+    1249    (1970, 1, 1, 1, 13, 24, 3, 1, 0)
+    1250    (1970, 1, 1, 1, 13, 32, 3, 1, 0)
+    1251    (1970, 1, 1, 1, 13, 27, 3, 1, 0)
+    1252    (1970, 1, 1, 1, 13, 34, 3, 1, 0)
+    1253    (1970, 1, 1, 1, 13, 34, 3, 1, 0)
+    Name: progress, Length: 28016, dtype: object
+
+
+
+
+```python
+danmu['视频进度'] = danmu['progress'].map(lambda x:strftime('%H:%M:%S',gmtime(x)))
+```
+
+
+```python
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>视频进度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2.691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:00:02</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9.193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>00:00:09</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23.017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>00:00:23</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31.033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+      <td>7.0</td>
+      <td>00:00:31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68.093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:01:08</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404.199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>01:13:24</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412.898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>01:13:32</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407.770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:27</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:34</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:34</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 13 columns</p>
+</div>
+
+
+
+
+```python
+danmu['视频进度【时分】'] = danmu['视频进度'].str[:5]
+danmu
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>视频进度</th>
+      <th>视频进度【时分】</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>53766889040208384</td>
+      <td>2.691</td>
+      <td>这熟悉的bgm让人灵魂颤抖，向敌军进攻，冲啊！</td>
+      <td>1629643402</td>
+      <td>4658843910516903647</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-22 22:43:22</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>7</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:00:02</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>53783364377004544</td>
+      <td>9.193</td>
+      <td>DNA动了</td>
+      <td>1629674826</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:06</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>00:00:09</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>53783376819848704</td>
+      <td>23.017</td>
+      <td>大制作啊</td>
+      <td>1629674850</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 07:27:30</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>79.0</td>
+      <td>00:00:23</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>53788075865425920</td>
+      <td>31.033</td>
+      <td>好家伙 我直接好家伙</td>
+      <td>1629683812</td>
+      <td>-6460990597571269883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 09:56:52</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>9</td>
+      <td>7.0</td>
+      <td>00:00:31</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>53811230195500032</td>
+      <td>68.093</td>
+      <td>大制作</td>
+      <td>1629727976</td>
+      <td>8879111121911466217</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-08-23 22:12:56</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:01:08</td>
+      <td>00:01</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1249</th>
+      <td>1212573043013250816</td>
+      <td>4404.199</td>
+      <td>终于毕业辣！</td>
+      <td>1671641170</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:10</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>01:13:24</td>
+      <td>01:13</td>
+    </tr>
+    <tr>
+      <th>1250</th>
+      <td>1212573101313764864</td>
+      <td>4412.898</td>
+      <td>5</td>
+      <td>1671641177</td>
+      <td>-4078686192199890078</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-22 00:46:17</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>0</td>
+      <td>35.0</td>
+      <td>01:13:32</td>
+      <td>01:13</td>
+    </tr>
+    <tr>
+      <th>1251</th>
+      <td>1214583153063240704</td>
+      <td>4407.770</td>
+      <td>疯狂撒花！</td>
+      <td>1671880794</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:19:54</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:27</td>
+      <td>01:13</td>
+    </tr>
+    <tr>
+      <th>1252</th>
+      <td>1214583220188773888</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1671880802</td>
+      <td>6689174160540423840</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-24 19:20:02</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:34</td>
+      <td>01:13</td>
+    </tr>
+    <tr>
+      <th>1253</th>
+      <td>1219667742169664512</td>
+      <td>4414.000</td>
+      <td>5</td>
+      <td>1672486925</td>
+      <td>5938975623521210714</td>
+      <td>5、Python.xlsx</td>
+      <td>2022-12-31 19:42:05</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>6</td>
+      <td>19</td>
+      <td>2.0</td>
+      <td>01:13:34</td>
+      <td>01:13</td>
+    </tr>
+  </tbody>
+</table>
+<p>28016 rows × 14 columns</p>
+</div>
+
+
+
+## 视频内容分析
+
+### p1、系统认识数据分析
+
+
+```python
+p1 = danmu[danmu['视频标题']=='1、系统认识数据分析.xlsx']
+```
+
+
+```python
+p1.groupby('视频进度【时分】')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>视频进度【时分】</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>00:29</th>
+      <td>244</td>
+    </tr>
+    <tr>
+      <th>00:00</th>
+      <td>128</td>
+    </tr>
+    <tr>
+      <th>00:11</th>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>00:09</th>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>00:15</th>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>00:24</th>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>00:28</th>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>00:01</th>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>00:03</th>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>00:16</th>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>00:06</th>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>00:02</th>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>00:08</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>00:17</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>00:12</th>
+      <td>66</td>
+    </tr>
+    <tr>
+      <th>00:26</th>
+      <td>66</td>
+    </tr>
+    <tr>
+      <th>00:05</th>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>00:22</th>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>00:10</th>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>00:07</th>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>00:27</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>00:13</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>00:18</th>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>00:25</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>00:21</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>00:23</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>00:14</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>00:20</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>00:19</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:04</th>
+      <td>28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+去除开头语结尾，11分钟时弹幕最多，弹幕与视频内容不太相关
+
+
+```python
+p1[p1['视频进度【时分】']=='00:11']
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>视频进度</th>
+      <th>视频进度【时分】</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>467</th>
+      <td>54538390004170240</td>
+      <td>683.024</td>
+      <td>正在看的小伙伴举个手呀</td>
+      <td>1631114923</td>
+      <td>4287605311228341710</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-08 23:28:43</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>3</td>
+      <td>23</td>
+      <td>1.0</td>
+      <td>00:11:23</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>468</th>
+      <td>54614344568386048</td>
+      <td>695.103</td>
+      <td>举手</td>
+      <td>1631259795</td>
+      <td>-1628569071256015389</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-10 15:43:15</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>5</td>
+      <td>15</td>
+      <td>3.0</td>
+      <td>00:11:35</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>469</th>
+      <td>54655814497023488</td>
+      <td>702.582</td>
+      <td>1</td>
+      <td>1631338893</td>
+      <td>-1367667807228799785</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-11 13:41:33</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>6</td>
+      <td>13</td>
+      <td>1.0</td>
+      <td>00:11:42</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>470</th>
+      <td>54721008270816256</td>
+      <td>713.449</td>
+      <td>1</td>
+      <td>1631463240</td>
+      <td>-296757868499160289</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-13 00:14:00</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>00:11:53</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>480</th>
+      <td>55127660746605568</td>
+      <td>705.966</td>
+      <td>1</td>
+      <td>1632238868</td>
+      <td>-6542834790891478612</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-21 23:41:08</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>2</td>
+      <td>23</td>
+      <td>1.0</td>
+      <td>00:11:45</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>482</th>
+      <td>55160558195541504</td>
+      <td>693.326</td>
+      <td>举手</td>
+      <td>1632301615</td>
+      <td>7815453928319057398</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-22 17:06:55</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>3</td>
+      <td>17</td>
+      <td>2.0</td>
+      <td>00:11:33</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>483</th>
+      <td>55249734176776704</td>
+      <td>677.565</td>
+      <td>红红火火恍恍惚惚</td>
+      <td>1632471704</td>
+      <td>4911477121964877228</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-24 16:21:44</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>5</td>
+      <td>16</td>
+      <td>2.0</td>
+      <td>00:11:17</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>485</th>
+      <td>55324748334235136</td>
+      <td>697.368</td>
+      <td>我我我</td>
+      <td>1632614783</td>
+      <td>-2332941944077862983</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-26 08:06:23</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>7</td>
+      <td>8</td>
+      <td>6.0</td>
+      <td>00:11:37</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>486</th>
+      <td>55324751524026880</td>
+      <td>706.511</td>
+      <td>嘎嘎嘎</td>
+      <td>1632614789</td>
+      <td>-2332941944077862983</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-26 08:06:29</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>7</td>
+      <td>8</td>
+      <td>6.0</td>
+      <td>00:11:46</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>487</th>
+      <td>55375446866020352</td>
+      <td>708.501</td>
+      <td>哒啦啦~</td>
+      <td>1632711482</td>
+      <td>1428966444445166747</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-27 10:58:02</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>1</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>00:11:48</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>492</th>
+      <td>55512872027687936</td>
+      <td>693.676</td>
+      <td>1</td>
+      <td>1632973600</td>
+      <td>-3044424760047519229</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-09-30 11:46:40</td>
+      <td>2021</td>
+      <td>9</td>
+      <td>4</td>
+      <td>11</td>
+      <td>6.0</td>
+      <td>00:11:33</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>493</th>
+      <td>55596845790484480</td>
+      <td>710.464</td>
+      <td>举手+1</td>
+      <td>1633133767</td>
+      <td>-2502848478459241767</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-02 08:16:07</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>6</td>
+      <td>8</td>
+      <td>3.0</td>
+      <td>00:11:50</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>55693395151254016</td>
+      <td>693.979</td>
+      <td>举手</td>
+      <td>1633317921</td>
+      <td>5249867756666838006</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-04 11:25:21</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>1</td>
+      <td>11</td>
+      <td>1.0</td>
+      <td>00:11:33</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>55784390598394880</td>
+      <td>674.148</td>
+      <td>对线武器，真实了</td>
+      <td>1633491481</td>
+      <td>8936189873651694528</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-06 11:38:01</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>3</td>
+      <td>11</td>
+      <td>5.0</td>
+      <td>00:11:14</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>504</th>
+      <td>56291619605111296</td>
+      <td>698.070</td>
+      <td>1</td>
+      <td>1634458943</td>
+      <td>-8841341408088102362</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-17 16:22:23</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>7</td>
+      <td>16</td>
+      <td>4.0</td>
+      <td>00:11:38</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>505</th>
+      <td>56291631453323776</td>
+      <td>701.878</td>
+      <td>1111</td>
+      <td>1634458966</td>
+      <td>-8841341408088102362</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-17 16:22:46</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>7</td>
+      <td>16</td>
+      <td>4.0</td>
+      <td>00:11:41</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>56550384512289792</td>
+      <td>698.000</td>
+      <td>1</td>
+      <td>1634952498</td>
+      <td>-1670175536511769832</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-23 09:28:18</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>6</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>00:11:38</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>509</th>
+      <td>56566936634723840</td>
+      <td>695.955</td>
+      <td>1</td>
+      <td>1634984069</td>
+      <td>7981401204014375532</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-23 18:14:29</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>6</td>
+      <td>18</td>
+      <td>5.0</td>
+      <td>00:11:35</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>512</th>
+      <td>56652492221548032</td>
+      <td>714.181</td>
+      <td>好大口气，我卖煎饼达不到这个目标</td>
+      <td>1635147253</td>
+      <td>6489260053155879439</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-25 15:34:13</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>1</td>
+      <td>15</td>
+      <td>4.0</td>
+      <td>00:11:54</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>513</th>
+      <td>56665524647037952</td>
+      <td>699.099</td>
+      <td>2021年10月25日在看的举个手。</td>
+      <td>1635172110</td>
+      <td>1164059658914381066</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-25 22:28:30</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:11:39</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>515</th>
+      <td>56709076444308992</td>
+      <td>698.725</td>
+      <td>举手</td>
+      <td>1635255179</td>
+      <td>2097567395121520943</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-26 21:32:59</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>2</td>
+      <td>21</td>
+      <td>3.0</td>
+      <td>00:11:38</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>516</th>
+      <td>56709082517437440</td>
+      <td>710.265</td>
+      <td>20211025在看</td>
+      <td>1635255191</td>
+      <td>2097567395121520943</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-26 21:33:11</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>2</td>
+      <td>21</td>
+      <td>3.0</td>
+      <td>00:11:50</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>519</th>
+      <td>56795129431406080</td>
+      <td>719.138</td>
+      <td>111</td>
+      <td>1635419312</td>
+      <td>6530391916884394277</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-28 19:08:32</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>4</td>
+      <td>19</td>
+      <td>1.0</td>
+      <td>00:11:59</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>520</th>
+      <td>56834440095939584</td>
+      <td>698.371</td>
+      <td>没有offer</td>
+      <td>1635494291</td>
+      <td>3832211368582765727</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-10-29 15:58:11</td>
+      <td>2021</td>
+      <td>10</td>
+      <td>5</td>
+      <td>15</td>
+      <td>1.0</td>
+      <td>00:11:38</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>526</th>
+      <td>57345504057498624</td>
+      <td>691.419</td>
+      <td>观测自己的股票操作是否正常</td>
+      <td>1636469068</td>
+      <td>-730768270747240890</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-11-09 22:44:28</td>
+      <td>2021</td>
+      <td>11</td>
+      <td>2</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:11:31</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>527</th>
+      <td>57373832275632640</td>
+      <td>696.647</td>
+      <td>1</td>
+      <td>1636523100</td>
+      <td>-6602608520658633999</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-11-10 13:45:00</td>
+      <td>2021</td>
+      <td>11</td>
+      <td>3</td>
+      <td>13</td>
+      <td>1.0</td>
+      <td>00:11:36</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>539</th>
+      <td>57954996831554560</td>
+      <td>699.884</td>
+      <td>1</td>
+      <td>1637631583</td>
+      <td>-7781617774156545891</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-11-23 09:39:43</td>
+      <td>2021</td>
+      <td>11</td>
+      <td>2</td>
+      <td>9</td>
+      <td>4.0</td>
+      <td>00:11:39</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>557</th>
+      <td>58688528432968704</td>
+      <td>693.125</td>
+      <td>2021年12月9日，找工作迷茫来学学</td>
+      <td>1639030684</td>
+      <td>-7332413762291727397</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-12-09 14:18:04</td>
+      <td>2021</td>
+      <td>12</td>
+      <td>4</td>
+      <td>14</td>
+      <td>2.0</td>
+      <td>00:11:33</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>564</th>
+      <td>58998881306440704</td>
+      <td>691.544</td>
+      <td>喵</td>
+      <td>1639622635</td>
+      <td>307964928640043783</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-12-16 10:43:55</td>
+      <td>2021</td>
+      <td>12</td>
+      <td>4</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>00:11:31</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>571</th>
+      <td>59327458556313600</td>
+      <td>699.738</td>
+      <td>汪</td>
+      <td>1640249346</td>
+      <td>-7384619036238233700</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-12-23 16:49:06</td>
+      <td>2021</td>
+      <td>12</td>
+      <td>4</td>
+      <td>16</td>
+      <td>1.0</td>
+      <td>00:11:39</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>579</th>
+      <td>59567786133160448</td>
+      <td>688.808</td>
+      <td>爪子</td>
+      <td>1640707735</td>
+      <td>-7263750381125925413</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2021-12-29 00:08:55</td>
+      <td>2021</td>
+      <td>12</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>00:11:28</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>582</th>
+      <td>956507312969687040</td>
+      <td>716.963</td>
+      <td>找不到工作</td>
+      <td>1641115757</td>
+      <td>7728918109331857131</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-02 17:29:17</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>7</td>
+      <td>17</td>
+      <td>1.0</td>
+      <td>00:11:56</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>586</th>
+      <td>958116761320783872</td>
+      <td>712.043</td>
+      <td>有机务兄弟么</td>
+      <td>1641307618</td>
+      <td>-638355763641384872</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-04 22:46:58</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>2</td>
+      <td>22</td>
+      <td>1.0</td>
+      <td>00:11:52</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>587</th>
+      <td>958616092158984192</td>
+      <td>716.982</td>
+      <td>有签派兄弟</td>
+      <td>1641367143</td>
+      <td>-6464994554380309883</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-05 15:19:03</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>3</td>
+      <td>15</td>
+      <td>1.0</td>
+      <td>00:11:56</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>596</th>
+      <td>960105765048418304</td>
+      <td>694.033</td>
+      <td>拒收、</td>
+      <td>1641544726</td>
+      <td>7975574863793804658</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-07 16:38:46</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>5</td>
+      <td>16</td>
+      <td>130.0</td>
+      <td>00:11:34</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>597</th>
+      <td>960105824196403200</td>
+      <td>701.049</td>
+      <td>举手</td>
+      <td>1641544733</td>
+      <td>7975574863793804658</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-07 16:38:53</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>5</td>
+      <td>16</td>
+      <td>130.0</td>
+      <td>00:11:41</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>609</th>
+      <td>966599079624876032</td>
+      <td>688.482</td>
+      <td>benchmarking 我的ACCA动了</td>
+      <td>1642318789</td>
+      <td>-2406032354568960437</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-01-16 15:39:49</td>
+      <td>2022</td>
+      <td>1</td>
+      <td>7</td>
+      <td>15</td>
+      <td>1.0</td>
+      <td>00:11:28</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>623</th>
+      <td>978748561888534528</td>
+      <td>663.597</td>
+      <td>对！</td>
+      <td>1643767120</td>
+      <td>-6365386531542626394</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-02-02 09:58:40</td>
+      <td>2022</td>
+      <td>2</td>
+      <td>3</td>
+      <td>9</td>
+      <td>37.0</td>
+      <td>00:11:03</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>628</th>
+      <td>984674578715090944</td>
+      <td>692.356</td>
+      <td>统一的认识 何为正常 发现异常</td>
+      <td>1644473556</td>
+      <td>-5442523552404719903</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-02-10 14:12:36</td>
+      <td>2022</td>
+      <td>2</td>
+      <td>4</td>
+      <td>14</td>
+      <td>4.0</td>
+      <td>00:11:32</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>633</th>
+      <td>994906852754522112</td>
+      <td>699.788</td>
+      <td>嘿~</td>
+      <td>1645693339</td>
+      <td>-5211336494610662497</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-02-24 17:02:19</td>
+      <td>2022</td>
+      <td>2</td>
+      <td>4</td>
+      <td>17</td>
+      <td>4.0</td>
+      <td>00:11:39</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>643</th>
+      <td>997716243007995904</td>
+      <td>674.677</td>
+      <td>6666</td>
+      <td>1646028244</td>
+      <td>-3651043829003953339</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-02-28 14:04:04</td>
+      <td>2022</td>
+      <td>2</td>
+      <td>1</td>
+      <td>14</td>
+      <td>28.0</td>
+      <td>00:11:14</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>646</th>
+      <td>998569782729172480</td>
+      <td>664.264</td>
+      <td>有文科转行成功的吗</td>
+      <td>1646129994</td>
+      <td>-3401605336661500702</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-01 18:19:54</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>2</td>
+      <td>18</td>
+      <td>3.0</td>
+      <td>00:11:04</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>648</th>
+      <td>998690182851169280</td>
+      <td>663.815</td>
+      <td>内卷武器</td>
+      <td>1646144347</td>
+      <td>8910096392103329202</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-01 22:19:07</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>2</td>
+      <td>22</td>
+      <td>1.0</td>
+      <td>00:11:03</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>649</th>
+      <td>999042742674133504</td>
+      <td>692.372</td>
+      <td>拇指</td>
+      <td>1646186375</td>
+      <td>-60674156888714915</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-02 09:59:35</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>3</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>00:11:32</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>664</th>
+      <td>1006686355352448000</td>
+      <td>689.678</td>
+      <td>有正常标准可以有根据的判断</td>
+      <td>1647097565</td>
+      <td>-6389503408479477897</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-12 23:06:05</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>6</td>
+      <td>23</td>
+      <td>1.0</td>
+      <td>00:11:29</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>672</th>
+      <td>1009596577444218368</td>
+      <td>664.135</td>
+      <td>你好我也是土木人</td>
+      <td>1647444490</td>
+      <td>7258366062057502566</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-16 23:28:10</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>3</td>
+      <td>23</td>
+      <td>9.0</td>
+      <td>00:11:04</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>677</th>
+      <td>1015197133973762560</td>
+      <td>677.937</td>
+      <td>产品经理听的很投入</td>
+      <td>1648112129</td>
+      <td>-2082095895446424902</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-24 16:55:29</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>4</td>
+      <td>16</td>
+      <td>1.0</td>
+      <td>00:11:17</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>680</th>
+      <td>1019050242785476608</td>
+      <td>700.339</td>
+      <td>1</td>
+      <td>1648571455</td>
+      <td>3907845382746485674</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-03-30 00:30:55</td>
+      <td>2022</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>00:11:40</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>695</th>
+      <td>1029687538819936256</td>
+      <td>665.344</td>
+      <td>数据是撕逼利器，职场社畜一定要注意，对外沟通一切以数据为唯一标准。</td>
+      <td>1649839519</td>
+      <td>-5812436207732835216</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-13 16:45:19</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>3</td>
+      <td>16</td>
+      <td>1.0</td>
+      <td>00:11:05</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>700</th>
+      <td>1032008860933718528</td>
+      <td>711.419</td>
+      <td>好卷</td>
+      <td>1650116243</td>
+      <td>-2864656993740471391</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-16 21:37:23</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>21</td>
+      <td>1.0</td>
+      <td>00:11:51</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>701</th>
+      <td>1032034415041172480</td>
+      <td>697.318</td>
+      <td>运营狗前来报到</td>
+      <td>1650119289</td>
+      <td>8210216129325398604</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-16 22:28:09</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>6</td>
+      <td>22</td>
+      <td>6.0</td>
+      <td>00:11:37</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>702</th>
+      <td>1032693737962220544</td>
+      <td>660.425</td>
+      <td>学会计的+1</td>
+      <td>1650197886</td>
+      <td>-8412527033994270055</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-17 20:18:06</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>7</td>
+      <td>20</td>
+      <td>3.0</td>
+      <td>00:11:00</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>703</th>
+      <td>1032768004926112768</td>
+      <td>697.888</td>
+      <td>举手</td>
+      <td>1650206740</td>
+      <td>2982134975043263856</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-17 22:45:40</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>7</td>
+      <td>22</td>
+      <td>1.0</td>
+      <td>00:11:37</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>706</th>
+      <td>1036369726265328640</td>
+      <td>710.104</td>
+      <td>kpi</td>
+      <td>1650636098</td>
+      <td>6525170814674550739</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-04-22 22:01:38</td>
+      <td>2022</td>
+      <td>4</td>
+      <td>5</td>
+      <td>22</td>
+      <td>14.0</td>
+      <td>00:11:50</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>727</th>
+      <td>1053815012876940544</td>
+      <td>676.884</td>
+      <td>学会计+1</td>
+      <td>1652715738</td>
+      <td>-6242127720799818098</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-16 23:42:18</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>1</td>
+      <td>23</td>
+      <td>11.0</td>
+      <td>00:11:16</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>728</th>
+      <td>1054236534925986304</td>
+      <td>696.746</td>
+      <td>1</td>
+      <td>1652765988</td>
+      <td>4349801583588383331</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-17 13:39:48</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>13</td>
+      <td>1.0</td>
+      <td>00:11:36</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>736</th>
+      <td>1054340129981944576</td>
+      <td>678.698</td>
+      <td>拉齐认知</td>
+      <td>1652778337</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-17 17:05:37</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>17</td>
+      <td>79.0</td>
+      <td>00:11:18</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>737</th>
+      <td>1054340252556111616</td>
+      <td>707.967</td>
+      <td>正常是什么</td>
+      <td>1652778352</td>
+      <td>-5089316151886879487</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-17 17:05:52</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>17</td>
+      <td>79.0</td>
+      <td>00:11:47</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>743</th>
+      <td>1059445088289529856</td>
+      <td>708.547</td>
+      <td>举手</td>
+      <td>1653386896</td>
+      <td>2789223858746849660</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-24 18:08:16</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>18</td>
+      <td>1.0</td>
+      <td>00:11:48</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>744</th>
+      <td>1059609228349632512</td>
+      <td>689.185</td>
+      <td>恍恍惚惚</td>
+      <td>1653406463</td>
+      <td>-8986661219594253015</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-24 23:34:23</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>2</td>
+      <td>23</td>
+      <td>2.0</td>
+      <td>00:11:29</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>746</th>
+      <td>1060794945323005952</td>
+      <td>667.758</td>
+      <td>108</td>
+      <td>1653547811</td>
+      <td>-8947767293302365182</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-26 14:50:11</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>14</td>
+      <td>4.0</td>
+      <td>00:11:07</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>747</th>
+      <td>1060795031130013952</td>
+      <td>683.085</td>
+      <td>107</td>
+      <td>1653547822</td>
+      <td>-8947767293302365182</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-26 14:50:22</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>14</td>
+      <td>4.0</td>
+      <td>00:11:23</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>748</th>
+      <td>1060910385538246912</td>
+      <td>702.306</td>
+      <td>同会计人</td>
+      <td>1653561573</td>
+      <td>9111263282846906330</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-05-26 18:39:33</td>
+      <td>2022</td>
+      <td>5</td>
+      <td>4</td>
+      <td>18</td>
+      <td>2.0</td>
+      <td>00:11:42</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>753</th>
+      <td>1066218062929422336</td>
+      <td>685.573</td>
+      <td>学会计+1</td>
+      <td>1654194297</td>
+      <td>-5073498754593941724</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-06-03 02:24:57</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>5</td>
+      <td>2</td>
+      <td>1.0</td>
+      <td>00:11:25</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>760</th>
+      <td>1081843395024128768</td>
+      <td>670.590</td>
+      <td>学会计的+1</td>
+      <td>1656056982</td>
+      <td>-6816646132216357892</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-06-24 15:49:42</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>5</td>
+      <td>15</td>
+      <td>1.0</td>
+      <td>00:11:10</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>761</th>
+      <td>1086191341882449152</td>
+      <td>669.966</td>
+      <td>土木人表示我也在看</td>
+      <td>1656575298</td>
+      <td>7380750276317885020</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-06-30 15:48:18</td>
+      <td>2022</td>
+      <td>6</td>
+      <td>4</td>
+      <td>15</td>
+      <td>3.0</td>
+      <td>00:11:09</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>768</th>
+      <td>1088949390623923456</td>
+      <td>675.821</td>
+      <td>发现异常，寻求因果关系</td>
+      <td>1656904083</td>
+      <td>8762127096762040748</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-04 11:08:03</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>1</td>
+      <td>11</td>
+      <td>4.0</td>
+      <td>00:11:15</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>769</th>
+      <td>1090396386890912256</td>
+      <td>706.863</td>
+      <td>人力资源人士也来学了</td>
+      <td>1657076578</td>
+      <td>863036324184915185</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-06 11:02:58</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>3</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>00:11:46</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>781</th>
+      <td>1091272453700972032</td>
+      <td>674.079</td>
+      <td>用数据说话，统一认知</td>
+      <td>1657181013</td>
+      <td>654906768591164574</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-07 16:03:33</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>16</td>
+      <td>97.0</td>
+      <td>00:11:14</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>782</th>
+      <td>1091480361583662336</td>
+      <td>700.092</td>
+      <td>经验值 定标准</td>
+      <td>1657205798</td>
+      <td>-8634435791402813398</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-07 22:56:38</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>4</td>
+      <td>22</td>
+      <td>11.0</td>
+      <td>00:11:40</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>784</th>
+      <td>1091896681513102080</td>
+      <td>665.302</td>
+      <td>俺也是土木人</td>
+      <td>1657255427</td>
+      <td>-5288736471877398384</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-08 12:43:47</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>5</td>
+      <td>12</td>
+      <td>1.0</td>
+      <td>00:11:05</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>788</th>
+      <td>1094199314294688512</td>
+      <td>718.033</td>
+      <td>这个关联性很强</td>
+      <td>1657529922</td>
+      <td>-4934127777049282949</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-11 16:58:42</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>1</td>
+      <td>16</td>
+      <td>1.0</td>
+      <td>00:11:58</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>790</th>
+      <td>1094916748710439168</td>
+      <td>718.093</td>
+      <td>基准</td>
+      <td>1657615447</td>
+      <td>6812827409839048297</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-12 16:44:07</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>16</td>
+      <td>187.0</td>
+      <td>00:11:58</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>795</th>
+      <td>1100096904705902592</td>
+      <td>677.898</td>
+      <td>会计举手</td>
+      <td>1658232970</td>
+      <td>3921503192926363188</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-19 20:16:10</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>20</td>
+      <td>1.0</td>
+      <td>00:11:17</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>796</th>
+      <td>1100174541709150464</td>
+      <td>691.403</td>
+      <td>学数学的来吧</td>
+      <td>1658242225</td>
+      <td>3807261517604342220</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-19 22:50:25</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>2</td>
+      <td>22</td>
+      <td>3.0</td>
+      <td>00:11:31</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>801</th>
+      <td>1103594143373991424</td>
+      <td>690.797</td>
+      <td>地理人</td>
+      <td>1658649873</td>
+      <td>3280564899725857010</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-07-24 16:04:33</td>
+      <td>2022</td>
+      <td>7</td>
+      <td>7</td>
+      <td>16</td>
+      <td>2.0</td>
+      <td>00:11:30</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>804</th>
+      <td>1111363305261329408</td>
+      <td>665.006</td>
+      <td>75个小伙伴好</td>
+      <td>1659576030</td>
+      <td>-8847135988081729252</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-04 09:20:30</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>4</td>
+      <td>9</td>
+      <td>9.0</td>
+      <td>00:11:05</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>808</th>
+      <td>1117255228547499008</td>
+      <td>678.930</td>
+      <td>前面会计的，我是财管的</td>
+      <td>1660278402</td>
+      <td>-2133230927077091886</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-12 12:26:42</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>12</td>
+      <td>1.0</td>
+      <td>00:11:18</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>811</th>
+      <td>1117571560245415936</td>
+      <td>672.900</td>
+      <td>文科本公司从人力转到业务数据分析了，下周培训sql并考试</td>
+      <td>1660316111</td>
+      <td>7481801497554261613</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-12 22:55:11</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:11:12</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>812</th>
+      <td>1117571899757675776</td>
+      <td>686.506</td>
+      <td>我人力本公司转岗</td>
+      <td>1660316152</td>
+      <td>7481801497554261613</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-12 22:55:52</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>5</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:11:26</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>822</th>
+      <td>1128287322211756032</td>
+      <td>703.663</td>
+      <td>服装零售行业前来报道</td>
+      <td>1661593530</td>
+      <td>-122384677916809403</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-27 17:45:30</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>17</td>
+      <td>1.0</td>
+      <td>00:11:43</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>823</th>
+      <td>1128398744107342336</td>
+      <td>695.220</td>
+      <td>医学生听得很认真</td>
+      <td>1661606812</td>
+      <td>-1602296390890933346</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-27 21:26:52</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>6</td>
+      <td>21</td>
+      <td>1.0</td>
+      <td>00:11:35</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>826</th>
+      <td>1131250213705734656</td>
+      <td>697.126</td>
+      <td>统计学来了</td>
+      <td>1661946734</td>
+      <td>NaN</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-08-31 19:52:14</td>
+      <td>2022</td>
+      <td>8</td>
+      <td>3</td>
+      <td>19</td>
+      <td>NaN</td>
+      <td>00:11:37</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>834</th>
+      <td>1136796278290930432</td>
+      <td>680.401</td>
+      <td>学会计的+1</td>
+      <td>1662607876</td>
+      <td>7943967020031247869</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-09-08 11:31:16</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>11</td>
+      <td>1.0</td>
+      <td>00:11:20</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>835</th>
+      <td>1136943456954903040</td>
+      <td>712.343</td>
+      <td>师范生也来了</td>
+      <td>1662625421</td>
+      <td>NaN</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-09-08 16:23:41</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>00:11:52</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>840</th>
+      <td>1141107024541741056</td>
+      <td>691.364</td>
+      <td>有木有美术生</td>
+      <td>1663121757</td>
+      <td>-3489082356613807645</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-09-14 10:15:57</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>10</td>
+      <td>1.0</td>
+      <td>00:11:31</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>841</th>
+      <td>1141316700004699904</td>
+      <td>663.103</td>
+      <td>土木的别跑 我也是</td>
+      <td>1663146752</td>
+      <td>5131173277570547264</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-09-14 17:12:32</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>3</td>
+      <td>17</td>
+      <td>1.0</td>
+      <td>00:11:03</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>844</th>
+      <td>1144043651815508736</td>
+      <td>661.176</td>
+      <td>发现数据与结果的因果关系</td>
+      <td>1663471830</td>
+      <td>3168233735377183104</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-09-18 11:30:30</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>2.0</td>
+      <td>00:11:01</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>861</th>
+      <td>1173842928167167232</td>
+      <td>682.432</td>
+      <td>会计+1</td>
+      <td>1667024181</td>
+      <td>5518652593988823129</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-10-29 14:16:21</td>
+      <td>2022</td>
+      <td>10</td>
+      <td>6</td>
+      <td>14</td>
+      <td>1.0</td>
+      <td>00:11:22</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>1175391020490653184</td>
+      <td>664.014</td>
+      <td>学会计的来听数据分析+1</td>
+      <td>1667208728</td>
+      <td>-1511562057006772612</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-10-31 17:32:08</td>
+      <td>2022</td>
+      <td>10</td>
+      <td>1</td>
+      <td>17</td>
+      <td>3.0</td>
+      <td>00:11:04</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>863</th>
+      <td>1175391474255507200</td>
+      <td>715.086</td>
+      <td>会计工资太低了</td>
+      <td>1667208782</td>
+      <td>-1511562057006772612</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-10-31 17:33:02</td>
+      <td>2022</td>
+      <td>10</td>
+      <td>1</td>
+      <td>17</td>
+      <td>3.0</td>
+      <td>00:11:55</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>866</th>
+      <td>1178214018448370944</td>
+      <td>698.987</td>
+      <td>学会计+1</td>
+      <td>1667545256</td>
+      <td>4185953703588359079</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-04 15:00:56</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>5</td>
+      <td>15</td>
+      <td>1.0</td>
+      <td>00:11:38</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>868</th>
+      <td>1181089014216928512</td>
+      <td>675.710</td>
+      <td>会计+1</td>
+      <td>1667887982</td>
+      <td>-4533195989089633743</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-08 14:13:02</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>2</td>
+      <td>14</td>
+      <td>1.0</td>
+      <td>00:11:15</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>871</th>
+      <td>1188867145061404160</td>
+      <td>715.083</td>
+      <td>梅赛德斯·奔驰·马克</td>
+      <td>1668815207</td>
+      <td>-4735989530507825119</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-19 07:46:47</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>6</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>00:11:55</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>875</th>
+      <td>1193272326855305984</td>
+      <td>702.715</td>
+      <td>暗藏玄只因</td>
+      <td>1669340346</td>
+      <td>8117935672918136815</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-25 09:39:06</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>5</td>
+      <td>9</td>
+      <td>1.0</td>
+      <td>00:11:42</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>878</th>
+      <td>1194882084599256832</td>
+      <td>675.206</td>
+      <td>土木人+1</td>
+      <td>1669532244</td>
+      <td>2328525573852456274</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-27 14:57:24</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>7</td>
+      <td>14</td>
+      <td>1.0</td>
+      <td>00:11:15</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>880</th>
+      <td>1196239701321995008</td>
+      <td>683.118</td>
+      <td>正常，搞造价的还真的要用这个</td>
+      <td>1669694084</td>
+      <td>3059704822805519333</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-11-29 11:54:44</td>
+      <td>2022</td>
+      <td>11</td>
+      <td>2</td>
+      <td>11</td>
+      <td>1.0</td>
+      <td>00:11:23</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>884</th>
+      <td>1197767776782068736</td>
+      <td>662.540</td>
+      <td>我上个月的加班时间是这么多，你的是这么多，我工作比你态度好</td>
+      <td>1669876245</td>
+      <td>2253115047081015524</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-12-01 14:30:45</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>14</td>
+      <td>4.0</td>
+      <td>00:11:02</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>891</th>
+      <td>1210885338684541696</td>
+      <td>695.847</td>
+      <td>土木人特别喜欢数据分析，感觉没前途了</td>
+      <td>1671439980</td>
+      <td>3818022367559200615</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-12-19 16:53:00</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>1</td>
+      <td>16</td>
+      <td>2.0</td>
+      <td>00:11:35</td>
+      <td>00:11</td>
+    </tr>
+    <tr>
+      <th>892</th>
+      <td>1213223431638964480</td>
+      <td>683.390</td>
+      <td>体制内听这个正常吗</td>
+      <td>1671718703</td>
+      <td>-1435151436282485549</td>
+      <td>1、系统认识数据分析.xlsx</td>
+      <td>2022-12-22 22:18:23</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>4</td>
+      <td>22</td>
+      <td>1.0</td>
+      <td>00:11:23</td>
+      <td>00:11</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+有人发了诱导性弹幕内容（正在看的小伙伴举个手呀），诱发了弹幕数量激增
+
+### p2、EXCEL基础操作
+
+
+```python
+p2 = danmu[danmu['视频标题']=='2、EXCEL基础操作.xlsx']
+p2.groupby('视频进度【时分】')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>视频进度【时分】</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>03:07</th>
+      <td>1277</td>
+    </tr>
+    <tr>
+      <th>03:06</th>
+      <td>570</td>
+    </tr>
+    <tr>
+      <th>00:58</th>
+      <td>406</td>
+    </tr>
+    <tr>
+      <th>03:20</th>
+      <td>322</td>
+    </tr>
+    <tr>
+      <th>03:21</th>
+      <td>302</td>
+    </tr>
+    <tr>
+      <th>00:00</th>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>01:09</th>
+      <td>163</td>
+    </tr>
+    <tr>
+      <th>00:39</th>
+      <td>154</td>
+    </tr>
+    <tr>
+      <th>01:08</th>
+      <td>143</td>
+    </tr>
+    <tr>
+      <th>00:48</th>
+      <td>127</td>
+    </tr>
+    <tr>
+      <th>03:19</th>
+      <td>115</td>
+    </tr>
+    <tr>
+      <th>01:51</th>
+      <td>114</td>
+    </tr>
+    <tr>
+      <th>02:15</th>
+      <td>110</td>
+    </tr>
+    <tr>
+      <th>03:11</th>
+      <td>110</td>
+    </tr>
+    <tr>
+      <th>01:23</th>
+      <td>108</td>
+    </tr>
+    <tr>
+      <th>02:06</th>
+      <td>103</td>
+    </tr>
+    <tr>
+      <th>01:11</th>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>00:35</th>
+      <td>94</td>
+    </tr>
+    <tr>
+      <th>01:49</th>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>02:52</th>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>01:33</th>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>02:25</th>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>00:45</th>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>02:37</th>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>00:01</th>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>03:01</th>
+      <td>84</td>
+    </tr>
+    <tr>
+      <th>01:00</th>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>02:51</th>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>00:40</th>
+      <td>80</td>
+    </tr>
+    <tr>
+      <th>02:14</th>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>02:07</th>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>00:06</th>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>02:38</th>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>00:53</th>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>00:29</th>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>01:18</th>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>01:34</th>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>01:13</th>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>01:57</th>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>01:17</th>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>01:50</th>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>01:48</th>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>00:16</th>
+      <td>69</td>
+    </tr>
+    <tr>
+      <th>00:38</th>
+      <td>69</td>
+    </tr>
+    <tr>
+      <th>01:21</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>01:01</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>00:42</th>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>00:43</th>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>02:26</th>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>02:27</th>
+      <td>65</td>
+    </tr>
+    <tr>
+      <th>01:10</th>
+      <td>65</td>
+    </tr>
+    <tr>
+      <th>01:36</th>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>01:25</th>
+      <td>63</td>
+    </tr>
+    <tr>
+      <th>02:02</th>
+      <td>63</td>
+    </tr>
+    <tr>
+      <th>01:22</th>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>03:02</th>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>03:03</th>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>02:01</th>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>02:35</th>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>01:06</th>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>02:32</th>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>03:05</th>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>00:05</th>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>00:55</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>01:02</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>00:20</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>01:05</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>00:52</th>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>01:43</th>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>02:50</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>00:08</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>02:28</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>00:03</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>01:41</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>00:11</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>02:42</th>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>00:09</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>00:44</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>01:42</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>01:54</th>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>01:29</th>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>00:57</th>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>01:27</th>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>02:16</th>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>02:09</th>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>00:32</th>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>02:36</th>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>02:46</th>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>01:52</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>00:12</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>00:17</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>02:08</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>02:29</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:07</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>02:33</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>03:17</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>02:10</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>00:56</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>02:55</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>01:26</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>00:02</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>03:16</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>02:04</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>00:30</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>02:40</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>00:07</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>00:04</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>00:54</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>01:28</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>02:39</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>00:34</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>02:56</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>02:05</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>02:00</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>01:38</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>01:35</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>00:10</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>00:47</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>00:46</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>00:21</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>00:51</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>02:11</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:16</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>00:22</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>00:31</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:46</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>02:45</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>02:49</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:21</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:22</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>00:23</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:03</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>00:24</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:17</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:19</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>01:14</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>00:13</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>00:18</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>01:47</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>02:20</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>00:41</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>01:31</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>02:03</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>03:10</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>03:08</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>02:47</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>02:13</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:27</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:19</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:24</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:12</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>02:12</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>00:15</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>02:44</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>02:31</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>02:18</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:24</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:23</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:33</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>01:39</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>01:37</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>03:15</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>02:30</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>03:12</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:20</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:04</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:32</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>02:48</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:30</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:15</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>02:41</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:58</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:59</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:36</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>01:40</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:34</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:57</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:49</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:59</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:43</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>01:56</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>03:04</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>03:00</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>03:09</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:58</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>01:53</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>01:45</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>00:14</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>01:59</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>01:55</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>02:53</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:44</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:26</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:37</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:28</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:50</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>02:54</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>03:18</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>01:19</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>03:13</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>03:14</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:25</th>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+在视频3小时6-7分钟，作者表达了视频的制作不易，用户纷纷发弹幕中表示了对课程的高度认可
+
+
+```python
+#pd.set_option('display.max_rows',300) #指定dataframe展示的最大行数
+p2[p2['视频进度【时分】']=='00:58']
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>progress</th>
+      <th>content</th>
+      <th>ctime</th>
+      <th>uid</th>
+      <th>视频标题</th>
+      <th>弹幕创建时间</th>
+      <th>年</th>
+      <th>月</th>
+      <th>星期</th>
+      <th>小时</th>
+      <th>用户弹幕数</th>
+      <th>视频进度</th>
+      <th>视频进度【时分】</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2789</th>
+      <td>53809523067118080</td>
+      <td>3504.306</td>
+      <td>2019年8月</td>
+      <td>1629724720</td>
+      <td>5028180788007338894</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-08-23 21:18:40</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>21</td>
+      <td>9.0</td>
+      <td>00:58:24</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>2790</th>
+      <td>53809539183199744</td>
+      <td>3521.786</td>
+      <td>2019年12月</td>
+      <td>1629724750</td>
+      <td>5028180788007338894</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-08-23 21:19:10</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>21</td>
+      <td>9.0</td>
+      <td>00:58:41</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>2791</th>
+      <td>53809760774439424</td>
+      <td>3503.423</td>
+      <td>2020年8月，</td>
+      <td>1629725173</td>
+      <td>-2777745373464846051</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-08-23 21:26:13</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>21</td>
+      <td>4.0</td>
+      <td>00:58:23</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>2792</th>
+      <td>53809766330828288</td>
+      <td>3519.276</td>
+      <td>2018年12</td>
+      <td>1629725184</td>
+      <td>-2777745373464846051</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-08-23 21:26:24</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>21</td>
+      <td>4.0</td>
+      <td>00:58:39</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>2794</th>
+      <td>53810638419461632</td>
+      <td>3516.353</td>
+      <td>2018，12</td>
+      <td>1629726847</td>
+      <td>1457595698628213566</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2021-08-23 21:54:07</td>
+      <td>2021</td>
+      <td>8</td>
+      <td>1</td>
+      <td>21</td>
+      <td>27.0</td>
+      <td>00:58:36</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3404</th>
+      <td>1216137017117999360</td>
+      <td>3500.155</td>
+      <td>2020年八月</td>
+      <td>1672066029</td>
+      <td>8900121939988193593</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-12-26 22:47:09</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:58:20</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>3405</th>
+      <td>1216137256428071680</td>
+      <td>3514.287</td>
+      <td>2018年12月</td>
+      <td>1672066058</td>
+      <td>8900121939988193593</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-12-26 22:47:38</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2.0</td>
+      <td>00:58:34</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>3406</th>
+      <td>1216650959565057792</td>
+      <td>3509.586</td>
+      <td>2020.8</td>
+      <td>1672127296</td>
+      <td>-3201237284070282385</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2022-12-27 15:48:16</td>
+      <td>2022</td>
+      <td>12</td>
+      <td>2</td>
+      <td>15</td>
+      <td>3.0</td>
+      <td>00:58:29</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>3408</th>
+      <td>1221089396225650176</td>
+      <td>3501.257</td>
+      <td>2020.8</td>
+      <td>1672656399</td>
+      <td>-6381986259600013454</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2023-01-02 18:46:39</td>
+      <td>2023</td>
+      <td>1</td>
+      <td>1</td>
+      <td>18</td>
+      <td>41.0</td>
+      <td>00:58:21</td>
+      <td>00:58</td>
+    </tr>
+    <tr>
+      <th>3409</th>
+      <td>1221089605907318272</td>
+      <td>3515.314</td>
+      <td>2018.12</td>
+      <td>1672656424</td>
+      <td>-6381986259600013454</td>
+      <td>2、EXCEL基础操作.xlsx</td>
+      <td>2023-01-02 18:47:04</td>
+      <td>2023</td>
+      <td>1</td>
+      <td>1</td>
+      <td>18</td>
+      <td>41.0</td>
+      <td>00:58:35</td>
+      <td>00:58</td>
+    </tr>
+  </tbody>
+</table>
+<p>406 rows × 14 columns</p>
+</div>
+
+
+
+此处作者说了“将弹幕打在答案上”（口误），使得大量用户发送弹幕给出答案
+
+### p3、Tableau数据可视化
+
+
+```python
+p3 = danmu[danmu['视频标题']=='3、Tableau数据可视化.xlsx']
+p3.groupby('视频进度【时分】')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>视频进度【时分】</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>02:48</th>
+      <td>189</td>
+    </tr>
+    <tr>
+      <th>00:57</th>
+      <td>177</td>
+    </tr>
+    <tr>
+      <th>02:47</th>
+      <td>177</td>
+    </tr>
+    <tr>
+      <th>01:15</th>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>00:00</th>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>00:58</th>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>00:05</th>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>01:42</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>00:59</th>
+      <td>58</td>
+    </tr>
+    <tr>
+      <th>01:46</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>01:04</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>02:12</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>00:52</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>01:12</th>
+      <td>49</td>
+    </tr>
+    <tr>
+      <th>00:27</th>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>01:07</th>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>01:02</th>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>01:53</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>01:45</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>00:38</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>01:24</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>01:27</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>02:18</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:13</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:28</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:43</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>00:15</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>02:23</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>02:06</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>00:12</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>01:09</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>01:44</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>02:14</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>02:21</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>01:49</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>00:36</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>02:41</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:10</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:11</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:23</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:41</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>02:16</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>00:25</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>01:36</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:22</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>00:39</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:20</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:47</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:48</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:37</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>02:30</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>00:40</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>02:17</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>00:28</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>01:25</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>00:56</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>00:44</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>01:29</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:06</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:45</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:14</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>02:10</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>00:50</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>01:06</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>00:26</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>00:41</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:35</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:39</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:46</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:19</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>02:37</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>02:42</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>01:01</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>01:39</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:54</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:35</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>02:31</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:00</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>00:03</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>02:01</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:19</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:20</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>00:55</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:34</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:04</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:05</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:07</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:18</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:09</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>01:16</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:04</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:15</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:47</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:07</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:22</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>01:35</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>01:08</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>00:23</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>01:18</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>01:51</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:14</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:11</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>01:33</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:38</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:36</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:42</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>01:03</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:11</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:51</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>02:24</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>02:09</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:21</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>01:17</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>02:44</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>01:38</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>00:31</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>00:19</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:32</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:52</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:29</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:33</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>01:56</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:37</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:01</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>02:45</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:02</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:13</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:16</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:17</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>01:26</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>02:40</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>02:13</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>02:00</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:48</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:20</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>02:34</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>01:32</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>02:46</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:43</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>01:58</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>02:33</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:29</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>02:27</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>02:26</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>01:30</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>02:43</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:53</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:34</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>01:40</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:32</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>02:08</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:24</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:10</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:08</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>01:54</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:49</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>01:21</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>00:30</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:50</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:05</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>02:25</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:59</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>00:22</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:57</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>01:31</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>02:03</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>02:28</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>01:55</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>02:02</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+00：57时，作者采用了肢体动作进行形象的教学以展示人对位置的敏感性，使大量用户发送“哈哈哈哈”弹幕
+
+### p4、SQL从入门到实战
+
+
+```python
+p4 = danmu[danmu['视频标题']=='4、SQL从入门到实战.xlsx']
+p4.groupby('视频进度【时分】')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>视频进度【时分】</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>03:54</th>
+      <td>236</td>
+    </tr>
+    <tr>
+      <th>03:53</th>
+      <td>116</td>
+    </tr>
+    <tr>
+      <th>01:09</th>
+      <td>103</td>
+    </tr>
+    <tr>
+      <th>00:00</th>
+      <td>98</td>
+    </tr>
+    <tr>
+      <th>00:45</th>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>03:05</th>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>03:04</th>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>01:05</th>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>01:06</th>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>02:12</th>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>00:06</th>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>02:50</th>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>00:57</th>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>01:41</th>
+      <td>70</td>
+    </tr>
+    <tr>
+      <th>03:23</th>
+      <td>69</td>
+    </tr>
+    <tr>
+      <th>02:04</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>00:07</th>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>02:24</th>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>01:39</th>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>02:27</th>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>03:06</th>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>02:26</th>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>03:55</th>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>02:57</th>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>03:07</th>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>01:10</th>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>02:18</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>01:07</th>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>03:28</th>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>02:58</th>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>02:46</th>
+      <td>51</td>
+    </tr>
+    <tr>
+      <th>02:20</th>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>01:32</th>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>03:29</th>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>03:11</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>03:09</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>03:03</th>
+      <td>46</td>
+    </tr>
+    <tr>
+      <th>03:13</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>03:26</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:35</th>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>01:33</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>03:10</th>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>02:23</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>00:02</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>01:55</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>02:03</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>03:38</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>01:25</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>01:31</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>02:49</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>01:47</th>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>02:22</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>03:44</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>02:17</th>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>00:25</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>02:01</th>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>00:01</th>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>03:18</th>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>01:56</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>01:59</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>02:47</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>03:00</th>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>02:02</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:05</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:45</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>03:45</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>01:58</th>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>02:37</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>02:54</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>03:08</th>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>02:40</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>02:56</th>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>01:42</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>03:02</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>03:12</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>02:09</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>00:49</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>00:47</th>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>02:11</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:56</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:46</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:58</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>03:16</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>03:37</th>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>00:30</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:55</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>02:53</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:57</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>03:31</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>02:08</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:29</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:34</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>01:40</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>01:43</th>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>01:34</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>02:15</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>01:50</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>01:20</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>01:22</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>00:36</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:06</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>02:44</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>01:01</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:21</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:48</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:44</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>03:27</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>03:48</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:22</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:17</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>01:38</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:38</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>01:12</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:14</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>02:16</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>03:34</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>00:54</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>03:14</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>01:24</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>03:47</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>03:01</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>03:43</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>03:24</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>03:32</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>00:59</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:45</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>03:22</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>03:36</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>01:21</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>03:19</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>01:26</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:13</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:20</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:48</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>01:17</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:28</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>02:42</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>01:03</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>03:25</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:10</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:25</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:28</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>03:17</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:21</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>01:04</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>01:46</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>02:32</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:38</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>01:08</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:34</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:33</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>00:43</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:43</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:30</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>01:30</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>03:51</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>02:00</th>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>00:08</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>01:28</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>00:39</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>00:23</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>02:41</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:29</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>01:19</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:35</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>01:37</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>03:41</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>01:00</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:39</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>02:59</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>01:18</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:40</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>01:13</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>02:07</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>03:30</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>01:54</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>02:52</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:24</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>00:19</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>03:46</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>00:32</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>03:35</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>00:16</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>01:52</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>03:33</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:35</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:02</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:10</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>03:42</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:14</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:27</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:15</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>02:19</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>00:27</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:13</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>01:11</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>02:36</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:51</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>01:49</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:09</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>01:23</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:52</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:37</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>01:44</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:05</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>01:51</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:42</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:12</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>01:14</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>03:39</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:15</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:11</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:26</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:53</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:03</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>02:51</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:04</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>01:36</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>02:55</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:41</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>01:53</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>03:21</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>03:20</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:50</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:33</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>03:50</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:18</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>03:52</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>03:15</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:48</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>03:40</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>02:31</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>00:31</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>01:16</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>02:29</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>03:49</th>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+01：09时，出现了有争议的教学内容，大量用户通过弹幕各抒己见
+
+### p5、Python
+
+
+```python
+p5 = danmu[danmu['视频标题']=='5、Python.xlsx']
+p5.groupby('视频进度【时分】')[['id']].count().sort_values('id',ascending=False)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+    </tr>
+    <tr>
+      <th>视频进度【时分】</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01:13</th>
+      <td>117</td>
+    </tr>
+    <tr>
+      <th>00:21</th>
+      <td>99</td>
+    </tr>
+    <tr>
+      <th>00:00</th>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>00:01</th>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>00:17</th>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>00:05</th>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>00:06</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>00:20</th>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>00:08</th>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>00:10</th>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>00:42</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>00:40</th>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>00:26</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:16</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>00:14</th>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>00:11</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>00:15</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:12</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:53</th>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>00:19</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:13</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>00:32</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>01:00</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>00:49</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:33</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:25</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:34</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:50</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>00:03</th>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>00:52</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:57</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:18</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>01:12</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:39</th>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>00:47</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>01:04</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:37</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:23</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:07</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:29</th>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>00:38</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>01:03</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>01:01</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:22</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:28</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:51</th>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>00:31</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>01:05</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:43</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:09</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>00:24</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>01:08</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:56</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:55</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:30</th>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>00:54</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>00:02</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>00:46</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>00:44</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>00:27</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>00:59</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>00:58</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>00:45</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>00:04</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>01:07</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>00:41</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>00:35</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>01:06</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>00:36</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>01:02</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>01:10</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>00:48</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>01:09</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>01:11</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+作者放了一段较为搞笑的视频以展示教学内容
+
+## 弹幕总数分析
+
+
+```python
+danmuavg =pd.DataFrame()
+danmuavg['弹幕数'] = danmu.groupby('视频标题')[['id']].count().astype(int)
+danmuavg['时长'] = danmu.groupby('视频标题')[['progress']].max().astype(float)
+danmuavg['平均弹幕'] = danmuavg['弹幕数']/danmuavg['时长']
+danmuavg
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>弹幕数</th>
+      <th>时长</th>
+      <th>平均弹幕</th>
+    </tr>
+    <tr>
+      <th>视频标题</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1、系统认识数据分析.xlsx</th>
+      <td>2126</td>
+      <td>1788.166</td>
+      <td>1.188928</td>
+    </tr>
+    <tr>
+      <th>2、EXCEL基础操作.xlsx</th>
+      <td>12548</td>
+      <td>12107.000</td>
+      <td>1.036425</td>
+    </tr>
+    <tr>
+      <th>3、Tableau数据可视化.xlsx</th>
+      <td>4836</td>
+      <td>10114.575</td>
+      <td>0.478122</td>
+    </tr>
+    <tr>
+      <th>4、SQL从入门到实战.xlsx</th>
+      <td>7252</td>
+      <td>14138.384</td>
+      <td>0.512930</td>
+    </tr>
+    <tr>
+      <th>5、Python.xlsx</th>
+      <td>1254</td>
+      <td>4437.166</td>
+      <td>0.282613</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+danmuavg.plot(kind='bar',y='平均弹幕')
+```
+
+
+
+
+    <Axes: xlabel='视频标题'>
+
+
+
+
+    
+![png](output_82_1.png)
+    
+
+
+
+```python
+print(danmuavg.columns)
+```
+
+    Index(['弹幕数', '时长', '平均弹幕'], dtype='object')
+    
+
+平均弹幕呈现逐渐降低的趋势，能够反映观看人数逐渐降低
+
+# 总结
+
+## 时序
+
+1、22年，3月份发弹幕的人最多；
+
+2、工作日1-4、周日时弹幕最活跃；周五周六活跃度下降；
+
+3、根据小时弹幕数量趋势，在每天11点、16点及21点发送弹幕数量最多，可能有2-3种不同的人群观看视频。
+
+## 用户
+
+1、大部分弹幕来自于4、5级用户，基本为b站的粘性用户，同时也有不少0级用户，可能为站外来源用户或者非粘性用户
+
+## 内容
+
+1、优质的内容能够收获大家的认可
+
+2、弹幕数量与教学内容、作者问答以及趣味互动有关
+
+
+```python
+
+```
